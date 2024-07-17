@@ -16,7 +16,6 @@ aside{
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100vh;
 }
 .title{
@@ -24,7 +23,7 @@ aside{
     align-items: center;
     justify-content: center;
     margin-top: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 50%;
 }
 .title img{
     width: 2rem;
