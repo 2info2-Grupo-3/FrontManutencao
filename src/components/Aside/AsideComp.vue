@@ -4,56 +4,34 @@ import LinksComp from './LinksComp.vue';
 
 <template>
     <aside>
-
-        <div class="infos">    
-        <h1>ELVIS TECH</h1>
+        <div class="title"><img src="../../../public/logo.svg" alt=""><h1>ELVIS TECH</h1></div>  
         <LinksComp/>
-        </div>
-
-        <div class="logout">
-            <button class="unLogged">
-                <p>Logout</p>
-            </button>
-        </div>
     </aside>
 </template>
 
 <style scoped>
+
 aside{
     background-color: #333333;
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 100vh;
 }
-
-button.unLogged{
-    background-color: #333333;
-    color: white;
-    padding: 0.5rem;
-    cursor: pointer;
-    border: 0;
-    width: 100%;
-    text-align: left;
-}
-
-button.unLogged p{
-    margin: 0px 20px;
-}
-
-button.unLogged:hover{
-    background-color: #555555;
-    transition: 0.5s ease-in-out;
-}
-
-h1{
-    margin: 0px 20px;
-}
-
-.infos{
+.title{
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+.title img{
+    width: 2rem;
+    height: 2rem;
+}
+.title h1{
+    font-size: 26px;
+    margin-left: 1rem;
 }
 </style>

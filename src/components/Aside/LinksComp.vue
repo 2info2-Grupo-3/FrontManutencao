@@ -1,47 +1,39 @@
 <script setup>
+import router from '@/router';
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 </script>
 
 <template>
-    <div>
-        <ul>
-            <li>
-            <p>Peças</p>
-            </li>
-            <li>
-                <p>Clientes</p>
-            </li>
-            <li>
-                <p>Serviços</p>
-            </li>
-            <li>
-                <p>Faturamento</p>
-            </li>
-            <li>
-                <p>Estoque</p>
-            </li>
-        </ul>
+    <div class="linkButtons">
+        <button><img src="../../../public/personicon.svg" alt="">Clientes</button>
     </div>
 </template>
 
 <style scoped>
-ul{
-    list-style: none;
-    margin: auto;
+.linkButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.linkButtons > button{
+    border: none;
     width: 100%;
+    height: 2rem;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: .5rem;
+    font-size: 16px;
+    margin: 1rem auto;
+    transition: .3s ease-in-out;
 }
-
-li{
-    padding: 0.5rem;
-    cursor: pointer;
+.linkButtons > button:hover{
+    background: #1a1a1a;
 }
-
-li:hover{
-    background-color: #555555;
-    transition: 0.5s ease-in-out;
+.linkButtons > button img{
+    width: 1.5rem;
+    margin: .5rem;
 }
-
-li p{
-    margin: 0px 20px;
-}
-
 </style>
