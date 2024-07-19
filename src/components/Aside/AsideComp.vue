@@ -21,16 +21,17 @@ aside{
 .title{
     display: flex;
     align-items: center;
-    justify-content: center;
     margin-top: 2rem;
     margin-bottom: 50%;
 }
 .title img{
     width: 2rem;
     height: 2rem;
+    margin-left: 7%;
 }
 .title h1{
     font-size: 26px;
     margin-left: 1rem;
+    color: #55A603;
 }
 </style>

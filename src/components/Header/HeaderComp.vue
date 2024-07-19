@@ -4,13 +4,6 @@
 <template>
     <header>
         <div>
-            <h1>PARTE X</h1>
-        </div>
-        <div>
-            <h1>PARTE X</h1>
-        </div>
-        <div>
-            <h1>PARTE X</h1>
         </div>
     </header>
 </template>
@@ -20,14 +13,19 @@ header{
     background-color: #333333;
     width: 100%;
     padding: 2rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #55A603;
 }
-
 header div{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+header > div > img{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: .5rem;
 }
 </style>
