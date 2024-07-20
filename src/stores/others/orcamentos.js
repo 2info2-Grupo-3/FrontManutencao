@@ -1,20 +1,21 @@
 import { reactive, computed } from "vue";
 import { defineStore } from "pinia";
-import { EntradasService } from "@/services";
+import { OrcamentosService } from "@/services";
 
-export const useEntradasStore = defineStore("entradas",
+export const useOrcamentosStore = defineStore("orcamentos",
     () => {
         const state = reactive({
-            entradas: [],
+            orcamentos: [],
             loading: false,
             error: null
         });
         const isLoading = computed(() => state.loading);
     
-        const getEntradas = async () => {
+        const getOrcamentos = async () => {
             state.loading = true;
             try {
-                state.entradas = await EntradasService.getEntradas();
+                state.orcamentos = await OrcamentosService.getOrcamentos();
+                console.log(state.orcamentos)
             } catch (error) {
                 state.error = error;
             } finally {
@@ -22,10 +23,10 @@ export const useEntradasStore = defineStore("entradas",
             }
         };
 
-        const createEntrada = async (newEntrada) => {
+        const createOrcamento = async (newOrcamento) => {
             state.loading = true;
             try {
-                state.entradas.push(await EntradasService.createEntrada(newEntrada));
+                state.orcamentos.push(await OrcamentosService.createOrcamento(newOrcamento));
             } catch (error) {
                 state.error = error;
             } finally {
@@ -33,11 +34,11 @@ export const useEntradasStore = defineStore("entradas",
             }
         };
 
-        const updateEntrada = async (entrada) => {
+        const updateOrcamento = async (orcamento) => {
             state.loading = true;
             try {
-                const index = state.entradas.findIndex((s) => s.id ===entrada.id);
-                state.entradas[index] = await EntradasService.updateEntrada(entrada);
+                const index = state.orcamentos.findIndex((s) => s.id ===orcamento.id);
+                state.orcamentos[index] = await OrcamentosService.updateOrcamento(orcamento);
             } catch (error) {
                 state.error = error;
             } finally {
@@ -45,12 +46,12 @@ export const useEntradasStore = defineStore("entradas",
             }
         };
 
-        const deleteEntrada = async (id) => {
+        const deleteOrcamento = async (id) => {
             state.loading = true;
             try {
-                const index = state.entradas.findIndex((s) => s.id === id);
-                state.entradas.splice(index, 1);
-                await EntradasService.deleteEntrada(id);
+                const index = state.orcamentos.findIndex((s) => s.id === id);
+                state.orcamentos.splice(index, 1);
+                await OrcamentosService.deleteOrcamento(id);
             } catch (error) {
                 state.error = error;
             } finally {
@@ -61,10 +62,10 @@ export const useEntradasStore = defineStore("entradas",
         return {
             state,
             isLoading,
-            getEntradas,
-            createEntrada,
-            updateEntrada,
-            deleteEntrada
+            getOrcamentos,
+            createOrcamento,
+            updateOrcamento,
+            deleteOrcamento
         };
     }
 )
