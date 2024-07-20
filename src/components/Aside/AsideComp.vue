@@ -4,7 +4,7 @@ import LinksComp from './LinksComp.vue';
 
 <template>
     <aside>
-        <div class="title"><img src="../../../public/logo.svg" alt=""><h1>ELVIS TECH</h1></div>  
+        <div class="title"><img src="../../../logo.svg" alt=""><h1>ELVIS TECH</h1></div>  
         <LinksComp/>
     </aside>
 </template>

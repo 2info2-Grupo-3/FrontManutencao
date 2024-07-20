@@ -1,28 +1,25 @@
 <script setup>
-import router from '@/router';
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 
 const showLinkPecas = () =>{
     const pecasLinks = document.querySelector('.pecasLinks');
     pecasLinks.style.display = pecasLinks.style.display === 'none' ? 'block' : 'none';
     const setaAnimation = document.querySelector('.setaAnimation');
-    setaAnimation.style.transform = setaAnimation.style.transform === 'rotate(0deg)' ? 'rotate(180deg)' : 'rotate(0deg)';
+    setaAnimation.style.transform = setaAnimation.style.transform === 'rotate(0deg)' ? 'rotate(-180deg)' : 'rotate(0deg)';
 }
 </script>
 
 <template>
     <div class="linkButtons">
-        <button><img src="../../../public/homeicon.svg" alt="">Home</button>
-        <button><img src="../../../public/personicon.svg" alt="">Clientes</button>
-        <button><img src="../../../public/orcamentoicon.svg" alt="">Orçamentos</button>
-        <button><img src="../../../public/faturamentoicon.svg" alt="">Orçamentos</button>
-        <button><img src="../../../public/servicosicon.svg" alt="">Serviços</button>
-        <button @click="showLinkPecas"><img src="../../../public/pecasicon.svg" alt="">Peças<img src="../../../public/setaicon.svg" alt="" class="setaAnimation"></button>
+        <button><img src="../../../homeicon.svg" alt="">Home</button>
+        <button><img src="../../../personicon.svg" alt="">Clientes</button>
+        <button><img src="../../../orcamentoicon.svg" alt="">Orçamentos</button>
+        <button><img src="../../../faturamentoicon.svg" alt="">Orçamentos</button>
+        <button><img src="../../../servicosicon.svg" alt="">Serviços</button>
+        <button @click="showLinkPecas"><img src="../../../pecasicon.svg" alt="">Peças<img src="../../../setaicon.svg" alt="" class="setaAnimation"></button>
         <div class="pecasLinks">
-            <button><img src="../../../public/estoqueicon.svg" alt="">Estoque</button>
-            <button><img src="../../../public/entradasicon.svg" alt="">Entradas</button>
-            <button><img src="../../../public/saidasicon.svg" alt="">Saídas</button>
+            <button><img src="../../../estoqueicon.svg" alt="">Estoque</button>
+            <button><img src="../../../entradasicon.svg" alt="">Entradas</button>
+            <button><img src="../../../saidasicon.svg" alt="">Saídas</button>
         </div>
     </div>
 </template>
@@ -42,6 +39,7 @@ const showLinkPecas = () =>{
     transition: .5s ease-in-out;
 }
 button{
+    cursor: pointer;
     border: none;
     width: 100%;
     height: 2rem;

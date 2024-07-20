@@ -1,6 +1,13 @@
 <script setup>
 import AsideComp from '@/components/Aside/AsideComp.vue'
 import Headercomp from '@/components/Header/HeaderComp.vue'
+import { useOrcamentosStore } from '@/stores'
+import { onMounted } from 'vue'
+const store = useOrcamentosStore()
+onMounted(async () => {
+  await store.getOrcamentos()
+  console.log(store.state.orcamentos)
+})
 </script>
 
 <template>

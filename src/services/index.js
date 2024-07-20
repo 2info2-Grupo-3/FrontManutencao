@@ -1,4 +1,10 @@
-import { PecasService, EntradasService, SaidasService } from "@/services/estoque";
-import { ClientesService, ServicosService} from "@/services/others";
+import SaidasService from "./estoque/saidas";
+import PecasService from "./estoque/pecas";
+import EntradasService from './estoque/entradas';
 
-export { PecasService, ClientesService, EntradasService, SaidasService, ServicosService };
+import ClientesService from "./others/clientes";
+import OrcamentosService from "./others/orcamentos";
+import ServicosService from "./others/servicos";
+
+
+export { PecasService, ClientesService, EntradasService, SaidasService, ServicosService, OrcamentosService };

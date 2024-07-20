@@ -1,6 +1,6 @@
 import { reactive, computed } from "vue";
 import { defineStore } from "pinia";
-import { SaidasService } from "../../service";
+import { SaidasService } from "@/services";
 
 export const useSaidasStore = defineStore("saidas",
     () => {

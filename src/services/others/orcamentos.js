@@ -1,37 +1,37 @@
 import api from "@/plugins/axios";
 
-class SaidasService {
+class OrcamentosService {
 
-    async getSaidas(){
+    async getOrcamentos(){
         try{
-            const response = await api.get('saidas/');
+            const response = await api.get('orcamentos/');
             return response.data;
         }catch(error){
             console.error(error);
         }
     }
 
-    async createSaida(data) {
+    async createOrcamentos(data) {
         try {
-            const response = await api.post('saidas/', data);
+            const response = await api.post('orcamentos/', data);
             return response.data;
         } catch (error) {
             console.error(error);
         }
     }
 
-    async updateSaida(id, data) {
+    async updateOrcamentos(id, data) {
         try {
-            const response = await api.put(`saidas/${id}/`, data);
+            const response = await api.put(`orcamentos/${id}/`, data);
             return response.data;
         } catch (error) {
             console.error(error);
         }
     }
 
-    async deleteSaida(id) {
+    async deleteOrcamentos(id) {
         try {
-            const response = await api.delete(`saidas/${id}/`);
+            const response = await api.delete(`orcamentos/${id}/`);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -39,4 +39,4 @@ class SaidasService {
     }
 }
 
-export default new SaidasService();
+export default new OrcamentosService();
