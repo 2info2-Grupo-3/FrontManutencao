@@ -2,11 +2,15 @@
 import AsideComp from '@/components/Aside/AsideComp.vue'
 import Headercomp from '@/components/Header/HeaderComp.vue'
 import { useOrcamentosStore } from '@/stores'
+import { useClientesStore } from '@/stores'
 import { onMounted } from 'vue'
-const store = useOrcamentosStore()
+const storeOrcamentos = useOrcamentosStore()
+const storeClientes = useClientesStore()
 onMounted(async () => {
-  await store.getOrcamentos()
-  console.log(store.state.orcamentos)
+  await storeOrcamentos.getOrcamentos()
+  console.log(storeOrcamentos.state.orcamentos)
+  await storeClientes.getClientes()
+  console.log(storeClientes.state.clientes)
 })
 </script>
 
