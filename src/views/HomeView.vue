@@ -24,10 +24,18 @@ import { onMounted } from 'vue'
 
 const store = useOrcamentosStore()
 
-// Defina suas options dentro do script setup
 const modalOptions = {
+   prevent: 'minha bola',
   inputs: [
-    { id: 1, type: 'text', value: '', label: 'Nome', prevent: 'minha bola' }
+    { id: 1, type: 'text', value: '', label: 'Nome' },
+    { id: 2, type: 'text', value: '', label: 'Email' },
+    { id: 3, type: 'text', value: '', label: 'Telefone' },
+    { id: 4, type: 'text', value: '', label: 'Cidade' },
+    { id: 5, type: 'text', value: '', label: 'Estado' },
+    { id: 6, type: 'text', value: '', label: 'País' },
+    { id: 7, type: 'text', value: '', label: 'Assunto' },
+    { id: 8, type: 'text', value: '', label: 'Mensagem' },
+    
   ]
 }
 
