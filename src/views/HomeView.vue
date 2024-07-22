@@ -1,6 +1,7 @@
 <script setup>
 import AsideComp from '@/components/Aside/AsideComp.vue'
 import Headercomp from '@/components/Header/HeaderComp.vue'
+import ClientsList from '@/components/others/ClientsList.vue'
 import { useOrcamentosStore } from '@/stores'
 import { useClientesStore } from '@/stores'
 import { onMounted } from 'vue'
@@ -24,7 +25,7 @@ onMounted(async () => {
     <Headercomp/>
   </div>
   <div class="comp">
-    AQUI VAI O CONTEÚDO
+    <ClientsList />
   </div>
 </div>
   </main>
