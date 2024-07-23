@@ -1,108 +1,259 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { useClientesStore } from '@/stores/others/clientes.js';
-
+import { computed, onMounted, ref } from 'vue';
+import { useClientesStore } from '@/stores/';
+import dataClienteModal from '../modalComps/dataModal/dataClienteModal.vue';
+import addModalCliente from '../modalComps/addModal/addModalCliente.vue';
 const clientesStore = useClientesStore();
+const inputSearch = ref('')
+
 onMounted(() => {
   clientesStore.getClientes();
 });
 const clientes = computed(() => clientesStore.state.clientes);
+
+function filteredList() {
+  return clientes.value.filter((itemf) =>
+    itemf.nome.toLowerCase().includes(inputSearch.value.toLowerCase())
+  )
+}
+const isModalVisible = ref(false);
+const selectedCliente = ref(null);
+const openModalAdd = ref(false);
+
+const openModal = (cliente) => {
+  selectedCliente.value = (cliente);
+  isModalVisible.value = true;
+};
+
+function formatarIdade(data) {
+  const dataNasc = Number(data.slice(0, 4));
+  console.log(dataNasc);
+  const dataAtual = Number(new Date().getFullYear());
+  const idade = dataAtual - dataNasc;
+  return idade;
+}
+
 </script>
 
 <template>
-  <div class="container">
-    <div class="headertable">
-      <h2>ID</h2>
-      <span></span>
-      <h2>Nome</h2>
-      <span></span>
-      <h2>CPF</h2>
-      <span></span>
-      <h2>Nasc.</h2>
-      <span></span>
-      <h2>Telefone</h2>
-      <span></span>
-      <h2>Endereço</h2>
-      <span></span>
-      <h2>Ações</h2>
+  <article>
+    <h2>Clientes</h2>
+    <div class="inputSearch">
+      <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
+      <button @click="openModalAdd = !openModalAdd">Adicionar +</button>
     </div>
-    <div v-for="cliente in clientes" :key="cliente.id" class="bodytable">
-      <div><p>{{ cliente.id }}</p></div><span></span>
-      <div><p>{{ cliente.nome }}</p></div><span></span>
-      <div><p>{{ cliente.cpf }}</p></div><span></span>
-      <div><p>{{ cliente.data }}</p></div><span></span>
-      <div><p>{{ cliente.telefone }}</p></div><span></span>
-      <div><p>{{ cliente.endereco }}</p></div><span></span>
-      <div><button><img src="../../../public/pencilicon.svg" alt=""></button><button><img src="../../../public/binicon.svg" alt=""></button></div>
+    <div v-if="openModalAdd" style="width: 90%;">
+      <addModalCliente />
     </div>
-  </div>
+    <div class="container">
+      <div class="headertable">
+        <h2>ID</h2>
+        <span></span>
+        <h2>Nome</h2>
+        <span></span>
+        <h2>CPF</h2>
+        <span></span>
+        <h2>Idade</h2>
+        <span></span>
+        <h2>Telefone</h2>
+        <span></span>
+        <h2>Endereço</h2>
+        <span></span>
+        <h2>Ações</h2>
+      </div>
+      <div v-for="cliente in filteredList()" :key="cliente.id" class="bodytable" @click="openModal(cliente)">
+        <div>
+          <p>{{ cliente.id }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ cliente.nome }}</p>
+        </div>
+        <span></span>
+        <div>
+          <p>{{ cliente.cpf }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ formatarIdade(cliente.data) }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ cliente.telefone }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ cliente.endereco }}</p>
+        </div><span></span>
+      </div>
+      <div v-if="filteredList().length <= 0" class="notFound">
+        <h3>Nenhum Cliente encontrado</h3>
+      </div>
+    </div>
+
+    <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
+      <h3>Detalhes do Cliente</h3>
+      <div class="modalInfo">
+        <p>ID: {{ selectedCliente?.id }}</p>
+        <p>Nome:<input type="text" v-model="selectedCliente.nome"></p>
+        <p>CPF:<input type="text" v-model="selectedCliente.cpf"></p>
+        <p>Data de Nascimento:<input type="date" v-model="selectedCliente.data"></p>
+        <p>Telefone:<input type="text" v-model="selectedCliente.telefone"></p>
+        <p>Endereço:<input type="text" v-model="selectedCliente.endereco"></p>
+        <p>Cidade:<input type="text" v-model="selectedCliente.cidade"></p>
+        <p>CEP:<input type="text" v-model="selectedCliente.cep"></p>
+        <p>Email:<input type="text" v-model="selectedCliente.email"></p>
+      </div>
+      <div class="buttonsInfo">
+        <button @click="clientesStore.updateCliente(selectedCliente)">Atualizar</button>
+        <button @click="clientesStore.deleteCliente(selectedCliente.id)">Excluir</button>
+      </div>
+    </dataClienteModal>
+  </article>
 </template>
 
 <style scoped>
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2rem;
-    width: 90%;
-    border: 2px #333 solid;
-    border-radius: .5rem;
-}
-.headertable{
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr;
-    width: 100%;
-    height: 2rem; 
-    background-color: #333333;
-    color: white;
-    padding: .5rem;
-}
-.headertable h2{
-    font-size: 16px;
-    text-align: center;
-}
-.headertable span{
-    height: 100%;
-    width: 1px;
-    background-color: white;
-}
-.bodytable{
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr;
-    width: 100%;
-    color: black;
-    padding: .5rem;
-    border-bottom: 2px solid #333;
-}
-.bodytable div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 2px #333 solid;
+  border-radius: .5rem;
+  padding: 10px;
 }
 
-.bodytable p{
-    font-size: 14px;
-    text-align: center;
+
+.buttonsInfo {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  position: absolute;
+  padding: 1rem 0rem;
 }
-.bodytable span{
-    height: 100%;
-    width: 1px;
-    background-color: #333333;
+
+.buttonsInfo button {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+  border-radius: .5rem;
+  cursor: pointer;
+  width: 100px;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: .3s;
 }
-.bodytable button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    color: white;
-    border: none;
-    margin: 0 .5rem;
-    border-radius: .5rem;
-    cursor: pointer;
+
+.modalInfo {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  border: 2px #333 solid;
 }
-.bodytable button img{
-    width: 1.5rem;
-    height: 1.5rem;
+
+.modalInfo>p {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 0px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 90%;
+  border: 2px #333 solid;
+  border-radius: .5rem;
+}
+
+.headertable {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
+  width: 100%;
+  height: 2rem;
+  background-color: #333333;
+  color: white;
+  padding: .5rem;
+}
+
+.headertable h2 {
+  font-size: 16px;
+  text-align: center;
+}
+
+.headertable span {
+  height: 100%;
+  width: 1px;
+  background-color: white;
+}
+
+.bodytable {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
+  width: 100%;
+  color: black;
+  padding: .5rem;
+  border-bottom: 2px solid #333;
+}
+
+.bodytable div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.bodytable p {
+  font-size: 14px;
+  text-align: center;
+}
+
+.bodytable span {
+  height: 100%;
+  width: 1px;
+  background-color: #333333;
+}
+
+.bodytable button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: white;
+  border: none;
+  margin: 0 .5rem;
+  border-radius: .5rem;
+  cursor: pointer;
+}
+
+.bodytable button img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.inputSearch {
+  padding: 10px;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputSearch input {
+  width: 95%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #333;
+}
+
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 1rem;
 }
 </style>
