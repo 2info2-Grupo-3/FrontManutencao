@@ -1,16 +1,27 @@
 <script setup>
+import { onMounted } from 'vue'
 import AsideComp from '@/components/Aside/AsideComp.vue'
 import Headercomp from '@/components/Header/HeaderComp.vue'
-import { useOrcamentosStore } from '@/stores'
-import { useClientesStore } from '@/stores'
-import { onMounted } from 'vue'
+import ServicosComp from '@/components/others/ServicosComp.vue'
+import PecasList from '@/components/others/PecasList.vue'
+import ClientsList from '@/components/others/ClientsList.vue'
+
+import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores'
+
 const storeOrcamentos = useOrcamentosStore()
 const storeClientes = useClientesStore()
+const storePecas = usePecasStore()
+const storeServicos = useServicosStore()
+
 onMounted(async () => {
   await storeOrcamentos.getOrcamentos()
   console.log(storeOrcamentos.state.orcamentos)
   await storeClientes.getClientes()
   console.log(storeClientes.state.clientes)
+  await storePecas.getPecas()
+  console.log(storePecas.state.pecas)
+  await storeServicos.getServicos()
+  console.log(storeServicos.state.servicos)
 })
 </script>
 
@@ -24,7 +35,7 @@ onMounted(async () => {
     <Headercomp/>
   </div>
   <div class="comp">
-    AQUI VAI O CONTEÚDO
+    <ClientsList/>
   </div>
 </div>
   </main>
