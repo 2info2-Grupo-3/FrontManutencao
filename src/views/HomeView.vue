@@ -2,9 +2,9 @@
 import { onMounted } from 'vue'
 import AsideComp from '@/components/Aside/AsideComp.vue'
 import Headercomp from '@/components/Header/HeaderComp.vue'
-import ServicosComp from '@/components/others/ServicosComp.vue'
-import PecasList from '@/components/others/PecasList.vue'
-import ClientsList from '@/components/others/ClientsList.vue'
+// import ServicosComp from '@/components/others/ServicosComp.vue'
+// import PecasList from '@/components/others/PecasList.vue'
+// import ClientsList from '@/components/others/ClientsList.vue'
 
 import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores'
 
@@ -15,14 +15,19 @@ const storeServicos = useServicosStore()
 
 onMounted(async () => {
   await storeOrcamentos.getOrcamentos()
-  console.log(storeOrcamentos.state.orcamentos)
+  
   await storeClientes.getClientes()
-  console.log(storeClientes.state.clientes)
+  
   await storePecas.getPecas()
-  console.log(storePecas.state.pecas)
+  
   await storeServicos.getServicos()
-  console.log(storeServicos.state.servicos)
+  
 })
+
+function cu(){
+  alert('cu')
+  window.open('https://www.youtube.com/watch?v=QSmScADQxPw')
+}
 </script>
 
 <template>
@@ -35,7 +40,12 @@ onMounted(async () => {
     <Headercomp/>
   </div>
   <div class="comp">
+    COMPONENTES ESTÃO COMENTADOS
+    <button @click="cu">Cu  </button>
+    <!-- <ServicosComp />
     <ClientsList/>
+    <PecasList/> -->
+
   </div>
 </div>
   </main>
@@ -53,5 +63,6 @@ main{
   justify-content: center;
   align-items: center;
   padding: 3rem;
+  flex-direction: column;
 }
 </style>
