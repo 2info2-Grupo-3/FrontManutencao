@@ -89,22 +89,22 @@ function formatarIdade(data) {
     </div>
 
     <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
-      <h3>Detalhes do Cliente</h3>
+      <span class="line"></span>
       <div class="modalInfo">
-        <p>ID: {{ selectedCliente?.id }}</p>
-        <p>Nome:<input type="text" v-model="selectedCliente.nome"></p>
-        <p>CPF:<input type="text" v-model="selectedCliente.cpf"></p>
-        <p>Data de Nascimento:<input type="date" v-model="selectedCliente.data"></p>
-        <p>Telefone:<input type="text" v-model="selectedCliente.telefone"></p>
-        <p>Endereço:<input type="text" v-model="selectedCliente.endereco"></p>
-        <p>Cidade:<input type="text" v-model="selectedCliente.cidade"></p>
-        <p>CEP:<input type="text" v-model="selectedCliente.cep"></p>
-        <p>Email:<input type="text" v-model="selectedCliente.email"></p>
-      </div>
+        <h3>Detalhes do Cliente</h3>
+        <div class="inputLine"><p>ID: {{ selectedCliente?.id }}</p></div>
+        <div class="inputLine"><label for="">Nome:</label><input type="text" v-model="selectedCliente.nome"></div>
+        <div class="inputLine"><label for="">CPF:</label><input type="text" v-model="selectedCliente.cpf"></div>
+        <div class="inputLine"><label for="">Data de Nascimento:</label><input type="date" v-model="selectedCliente.data"></div>
+        <div class="inputLine"><label for="">Telefone:</label><input type="text" v-model="selectedCliente.telefone"></div>
+        <div class="inputLine"><label for="">Endereço:</label><input type="text" v-model="selectedCliente.endereco"></div>
+        <div class="inputLine"><label for="">Cidade:</label><input type="text" v-model="selectedCliente.cidade"></div>
+        <div class="inputLine"><label for="">CEP:</label><input type="text" v-model="selectedCliente.cep"></div>
+        <div class="inputLine"><label for="">Email:</label><input type="text" v-model="selectedCliente.email"></div>
       <div class="buttonsInfo">
         <button @click="clientesStore.updateCliente(selectedCliente)">Atualizar</button>
         <button @click="clientesStore.deleteCliente(selectedCliente.id)">Excluir</button>
-      </div>
+      </div></div>
     </dataClienteModal>
   </article>
 </template>
@@ -122,9 +122,8 @@ article {
 .buttonsInfo {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  position: absolute;
-  padding: 1rem 0rem;
+  align-items: center;
+  margin: 1rem 0;
 }
 
 .buttonsInfo button {
@@ -134,16 +133,22 @@ article {
   border-radius: .5rem;
   cursor: pointer;
   width: 100px;
-  margin: 0 10px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight:bold;
   transition: .3s;
 }
-
+h3{
+  font-size: 20px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  align-items: center;
+  border-top: 10px solid #fff;
+  margin: auto;
+  width: 100%;
   border: 2px #333 solid;
 }
 
@@ -203,7 +208,7 @@ article {
   color: black;
   padding: .5rem;
   border-bottom: 2px solid #333;
-}
+} 
 .bodytable:-webkit-scrollbar{
   display: none;
 }
@@ -279,5 +284,23 @@ article {
   font-size: 20px;
   border-radius: 5px;
   padding: 1rem;
+}
+.inputLine{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: .5rem 0;
+}
+.inputLine > label{
+  font-size: 16px;
+  font-weight: bold;
+  width: 40%;
+}
+.inputLine > input{
+  width: 60%;
+  padding: .5rem;
+  border-radius: .5rem;
+  border: 1px solid #333;
 }
 </style>
