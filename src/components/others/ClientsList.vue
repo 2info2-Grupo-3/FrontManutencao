@@ -39,6 +39,7 @@ function formatarIdade(data) {
   <article>
     <h2>Clientes</h2>
     <div class="inputSearch">
+      <img src="../../../public/searchicon.svg" alt="">
       <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
       <button @click="openModalAdd = !openModalAdd">Adicionar +</button>
     </div>
@@ -58,9 +59,8 @@ function formatarIdade(data) {
         <h2>Telefone</h2>
         <span></span>
         <h2>Endereço</h2>
-        <span></span>
-        <h2>Ações</h2>
       </div>
+      <div class="tablescrool">
       <div v-for="cliente in filteredList()" :key="cliente.id" class="bodytable" @click="openModal(cliente)">
         <div>
           <p>{{ cliente.id }}</p>
@@ -80,11 +80,12 @@ function formatarIdade(data) {
         </div><span></span>
         <div>
           <p>{{ cliente.endereco }}</p>
-        </div><span></span>
+        </div>
       </div>
       <div v-if="filteredList().length <= 0" class="notFound">
         <h3>Nenhum Cliente encontrado</h3>
       </div>
+    </div>
     </div>
 
     <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
@@ -115,12 +116,9 @@ article {
   align-items: center;
   justify-content: center;
   width: 100%;
-  border: 2px #333 solid;
   border-radius: .5rem;
   padding: 10px;
 }
-
-
 .buttonsInfo {
   display: flex;
   justify-content: center;
@@ -159,6 +157,7 @@ article {
 }
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,8 +167,8 @@ article {
   border: 2px #333 solid;
   border-radius: .5rem;
 }
-
 .headertable {
+  position: sticky;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
@@ -189,7 +188,14 @@ article {
   width: 1px;
   background-color: white;
 }
-
+.tablescrool{
+  width: 100%;
+  max-height: 30rem;
+  overflow-y: scroll;
+}
+.container > .tablescrool::-webkit-scrollbar{
+  display: none;
+}
 .bodytable {
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
@@ -198,6 +204,9 @@ article {
   padding: .5rem;
   border-bottom: 2px solid #333;
 }
+.bodytable:-webkit-scrollbar{
+  display: none;
+}
 
 .bodytable div {
   display: flex;
@@ -205,9 +214,8 @@ article {
   align-items: center;
   height: 50px;
 }
-
 .bodytable p {
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -235,19 +243,35 @@ article {
 }
 
 .inputSearch {
-  padding: 10px;
   width: 50%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  border: 2px solid #333;
+  border-radius: 1.5rem;
+  padding: .5rem;
+}
+.inputSearch > img{
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
 }
 
 .inputSearch input {
-  width: 95%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #333;
+  width: 85%;
+  border: none
 }
-
+.inputSearch input:focus {
+  outline: none;
+}
+.inputSearch > button{
+  width: 15%;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  height: 1.5rem;
+}
 .notFound {
   display: flex;
   justify-content: center;
