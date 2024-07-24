@@ -16,6 +16,7 @@ function filteredList() {
     itemf.nome.toLowerCase().includes(inputSearch.value.toLowerCase())
   )
 }
+
 const isModalVisible = ref(false);
 const selectedCliente = ref(null);
 const openModalAdd = ref(false);
@@ -27,7 +28,6 @@ const openModal = (cliente) => {
 
 function formatarIdade(data) {
   const dataNasc = Number(data.slice(0, 4));
-  console.log(dataNasc);
   const dataAtual = Number(new Date().getFullYear());
   const idade = dataAtual - dataNasc;
   return idade;

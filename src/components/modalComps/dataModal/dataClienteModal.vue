@@ -9,13 +9,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close']);
-
 const closeModal = () => {
     emit('close');
 };
 </script>
-
-
 
 <template>
         <div class="modal" v-if="props.isVisible">
