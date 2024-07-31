@@ -1,64 +1,109 @@
 <script setup>
-import { reactive } from 'vue';
-import { useClientesStore } from '@/stores/';
-const clientesStore = useClientesStore();
+import { reactive } from 'vue'
+import { useClientesStore } from '@/stores/'
+const clientesStore = useClientesStore()
 
 const cliente = reactive({
-    nome: '',
-    cpf: '',
-    data: '',
-    telefone: '',
-    endereco: '',
-    email: '',
-    cidade: '',
-    cep: ''
-});
+  nome: '',
+  cpf: '',
+  data: '',
+  telefone: '',
+  endereco: '',
+  email: '',
+  cidade: '',
+  cep: ''
+})
 </script>
 
 <template>
-    <div class="modalAdd">
-        <h2>Adicionar Cliente</h2>
-        <form @submit.prevent>
-            <div>
-                <input type="text" placeholder="Nome" v-model="cliente.nome" />
-                <input type="text" placeholder="CPF" maxlength="11" v-model="cliente.cpf" />
-                <input type="date" placeholder="Data de Nascimento" v-model="cliente.data" />
-                <input type="text" placeholder="Telefone" v-model="cliente.telefone" />
-            </div>
-            <span></span>
-            <div>
-                <input type="text" placeholder="Endereço" v-model="cliente.endereco" />
-                <input type="email" placeholder="Email" v-model="cliente.email" />
-                <input type="text" placeholder="Cidade" v-model="cliente.cidade" />
-                <input type="text" placeholder="CEP" v-model="cliente.cep" />
-            </div>
-        </form>
-        <button @click="clientesStore.createCliente(cliente)">Adicionar</button>
-    </div>
+  <div class="modalAdd">
+    <h2>Adicionar Cliente</h2>
+    <form @submit.prevent>
+      <div>
+        <label for="">Nome:</label><input type="text" placeholder="Nome" v-model="cliente.nome" />
+      </div>
+      <div>
+        <label for="">CPF:</label
+        ><input type="text" placeholder="CPF" maxlength="11" v-model="cliente.cpf" />
+      </div>
+      <div>
+        <label for="">Data de Nascimento:</label
+        ><input type="date" placeholder="Data de Nascimento" v-model="cliente.data" />
+      </div>
+      <div>
+        <label for="">Telefone:</label
+        ><input type="text" placeholder="Telefone" v-model="cliente.telefone" />
+      </div>
+      <div>
+        <label for="">Endereço:</label
+        ><input type="text" placeholder="Endereço" v-model="cliente.endereco" />
+      </div>
+      <div>
+        <label for="">Email:</label
+        ><input type="email" placeholder="Email" v-model="cliente.email" />
+      </div>
+      <div>
+        <label for="">Cidade:</label
+        ><input type="text" placeholder="Cidade" v-model="cliente.cidade" />
+      </div>
+      <div>
+        <label for="">CEP:</label><input type="text" placeholder="CEP" v-model="cliente.cep" />
+      </div>
+    <button @click="clientesStore.addCliente(cliente)">Adicionar</button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
 .modalAdd {
-    background-color: #333333;
-    padding: 1rem;
-    height: 150px;
-    color: white;
-    margin: auto;
-    width: 100%;
+  background-color: #333333;
+  padding: 1rem;
+  color: white;
+  align-items: center;
+  top: 50%;
+  left: 60%;
+  transform: translate(-60%, -45%);
+  width: 40%;
+  position: absolute;
+  z-index: 10;
 }
-
+h2{
+    text-align: center;
+    margin: .5rem 0 2rem 0;
+}
 form {
-    display: grid;
-    grid-template-columns: 1fr 0.1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
 }
 
 form > div {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  width: 90%;
+  margin: .25rem auto;
 }
 
 input {
-    width: 100%;
+  width: 100%;
+    padding: .5rem;
+    border-radius: .5rem;
+    border: 2px solid #333;
+}
+button{
+    padding: .5rem;
+    border-radius: 1rem;
+    border: 2px solid #333;
+    background-color: #fff;
+    color: #55A603;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    width: 30%;
+    margin: 1rem auto;
+}
+button:hover{
+    background-color: #55A603;
+    color: #fff;
 }
 </style>
