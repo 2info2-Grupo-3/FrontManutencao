@@ -16,8 +16,11 @@ const cliente = reactive({
 </script>
 
 <template>
+  <div class="background">
   <div class="modalAdd">
+    <div class="modalHeader">
     <h2>Adicionar Cliente</h2>
+    <button @click="$emit('close')">X</button></div>
     <form @submit.prevent>
       <div>
         <label for="">Nome:</label><input type="text" placeholder="Nome" v-model="cliente.nome" />
@@ -49,12 +52,23 @@ const cliente = reactive({
       <div>
         <label for="">CEP:</label><input type="text" placeholder="CEP" v-model="cliente.cep" />
       </div>
-    <button @click="clientesStore.addCliente(cliente)">Adicionar</button>
+    <button @click="clientesStore.createCliente(cliente)">Adicionar</button>
     </form>
   </div>
+</div>
 </template>
 
 <style scoped>
+.background{
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  
+}
 .modalAdd {
   background-color: #333333;
   padding: 1rem;
@@ -66,10 +80,25 @@ const cliente = reactive({
   width: 40%;
   position: absolute;
   z-index: 10;
+  border-radius: 1rem;
 }
-h2{
-    text-align: center;
-    margin: .5rem 0 2rem 0;
+.modalHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.modalHeader> button{
+    background-color: transparent;
+    width: 5%;
+    font-size: 20px;
+    color: white;
+    margin: 0;
+    border-radius: 1rem;
+    border: 2px solid #333;
+    cursor: pointer;
+    transition: .3s ease-in-out;
 }
 form {
   display: flex;
@@ -88,7 +117,7 @@ form > div {
 input {
   width: 100%;
     padding: .5rem;
-    border-radius: .5rem;
+    border-radius: 1rem;
     border: 2px solid #333;
 }
 button{
@@ -102,7 +131,7 @@ button{
     width: 30%;
     margin: 1rem auto;
 }
-button:hover{
+form> button:hover{
     background-color: #55A603;
     color: #fff;
 }

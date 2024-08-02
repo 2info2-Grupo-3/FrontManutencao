@@ -41,10 +41,10 @@ function formatarIdade(data) {
     <div class="inputSearch">
       <img src="../../../public/searchicon.svg" alt="">
       <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
-      <button @click="openModalAdd = !openModalAdd">Adicionar +</button>
+      <button @click="openModalAdd = true">Adicionar +</button>
     </div>
     <div v-if="openModalAdd" style="width: 90%;">
-      <addModalCliente />
+      <addModalCliente @close="openModalAdd = false"/>
     </div>
     <div class="container">
       <div class="headertable">
@@ -89,22 +89,22 @@ function formatarIdade(data) {
     </div>
 
     <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
-      <h3>Detalhes do Cliente</h3>
       <div class="modalInfo">
-        <p>ID: {{ selectedCliente?.id }}</p>
-        <p>Nome:<input type="text" v-model="selectedCliente.nome"></p>
-        <p>CPF:<input type="text" v-model="selectedCliente.cpf"></p>
-        <p>Data de Nascimento:<input type="date" v-model="selectedCliente.data"></p>
-        <p>Telefone:<input type="text" v-model="selectedCliente.telefone"></p>
-        <p>Endereço:<input type="text" v-model="selectedCliente.endereco"></p>
-        <p>Cidade:<input type="text" v-model="selectedCliente.cidade"></p>
-        <p>CEP:<input type="text" v-model="selectedCliente.cep"></p>
-        <p>Email:<input type="text" v-model="selectedCliente.email"></p>
-      </div>
-      <div class="buttonsInfo">
+        <div class="itemInfo"><p>ID: {{ selectedCliente?.id }}</p></div>
+        <div class="itemInfo"><label for="">Nome:</label><input type="text" v-model="selectedCliente.nome"></div>
+        <div class="itemInfo"><label for="">CPF:</label><input type="text" v-model="selectedCliente.cpf"></div>
+        <div class="itemInfo"><label for="">Data de Nascimento:</label><input type="date" v-model="selectedCliente.data"></div>
+        <div class="itemInfo"><label for="">Telefone:</label><input type="text" v-model="selectedCliente.telefone"></div>
+        <div class="itemInfo"><label for="">Endereço:</label><input type="text" v-model="selectedCliente.endereco"></div>
+        <div class="itemInfo"><label for="">Cidade:</label><input type="text" v-model="selectedCliente.cidade"></div>
+        <div class="itemInfo"><label for="">CEP:</label><input type="text" v-model="selectedCliente.cep"></div>
+        <div class="itemInfo"><label for="">Email:</label><input type="text" v-model="selectedCliente.email"></div>
+        <div class="itemInfo">
         <button @click="clientesStore.updateCliente(selectedCliente)">Atualizar</button>
         <button @click="clientesStore.deleteCliente(selectedCliente.id)">Excluir</button>
       </div>
+      </div>
+     
     </dataClienteModal>
   </article>
 </template>
@@ -143,10 +143,48 @@ article {
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 90%;
+  margin: auto;
   border: 2px #333 solid;
 }
-
+.itemInfo{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 0px;
+}
+.itemInfo>label{
+  width: 30%;
+}
+.itemInfo>input{
+  width: 60%;
+  padding: .5rem;
+  border-radius: 1rem;
+  border: 2px solid #333;
+}
+.itemInfo > button{
+  margin-top: .5rem;
+  width: 100%;
+  padding: .5rem;
+  background-color: white;
+  color: #55A603;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: .3s;
+}
+.itemInfo > button:nth-child(2){
+  color: #FF0000;
+}
+.itemInfo > button:hover{
+  background-color: #55A603;
+  color: white;
+}
+.itemInfo > button:hover:nth-child(2){
+  background-color: #FF0000;
+  color: white;
+}
 .modalInfo>p {
   display: flex;
   justify-content: space-between;
