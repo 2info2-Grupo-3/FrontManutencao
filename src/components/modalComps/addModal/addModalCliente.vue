@@ -75,8 +75,8 @@ const cliente = reactive({
   color: white;
   align-items: center;
   top: 50%;
-  left: 60%;
-  transform: translate(-60%, -45%);
+  left: 50%;
+  transform: translate(-50%, -45%);
   width: 40%;
   position: absolute;
   z-index: 10;
