@@ -1,7 +1,10 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { useOrcamentosStore } from '@/stores/others/orcamentos.js'
-import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue'
+// import { useClientesStore } from '@/stores/others/clientes.js';
+// import { usePecasStore } from '@/stores/estoque/pecas';
+// import { useServicosStore } from '@/stores/others/servicos.js';
+// import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue'
 const orcamentosStore = useOrcamentosStore()
 const inputSearch = ref('')
 
@@ -67,7 +70,7 @@ const openModal = (orcamento) => {
           </div>
         </div>
       </div>
-      <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
+      <!-- <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
         <div class="modalInfo">
         <div class="itemInfo"><p>ID: {{ selectedOrcamento?.id }}</p></div>
         <div class="itemInfo"><label for="">Nome:</label><input type="text" v-model="selectedOrcamento.cliente"></div>
@@ -83,7 +86,7 @@ const openModal = (orcamento) => {
         <button @click="clientesStore.deleteCliente(selectedOrcamento.id)">Excluir</button>
       </div>
       </div>
-      </dataOrcamentosModal>
+      </dataOrcamentosModal> -->
     </div>
   </article>
 </template>
