@@ -5,9 +5,11 @@ import { useOrcamentosStore } from '@/stores/others/orcamentos.js'
 // import { usePecasStore } from '@/stores/estoque/pecas';
 // import { useServicosStore } from '@/stores/others/servicos.js';
 // import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue'
+import addModalOrcamentos from '@/components/modalComps/addModal/addModalOrcamentos.vue';
 const orcamentosStore = useOrcamentosStore()
 const inputSearch = ref('')
 
+const addModalVisible = ref(false)
 onMounted(() => {
   orcamentosStore.getOrcamentos()
 })
@@ -15,7 +17,6 @@ const orcamentos = computed(() => orcamentosStore.state.orcamentos)
 
 const isModalVisible = ref(false);
 const selectedOrcamento = ref(null);
-// const openModalAdd = ref(false);
 
 const openModal = (orcamento) => {
   selectedOrcamento.value = (orcamento);
@@ -34,7 +35,12 @@ const openModal = (orcamento) => {
     <div class="inputSearch">
       <img src="../../../public/searchicon.svg" alt="" />
       <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
+      
     </div>
+    <button @click="addModalVisible = true">Adicionar</button>
+    <div v-if="addModalVisible">
+        <addModalOrcamentos @close="addModalVisible = false"/>
+      </div>
     <div class="container">
       <div class="headertable">
         <h2>ID</h2>
@@ -70,6 +76,7 @@ const openModal = (orcamento) => {
           </div>
         </div>
       </div>
+    
       <!-- <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
         <div class="modalInfo">
         <div class="itemInfo"><p>ID: {{ selectedOrcamento?.id }}</p></div>

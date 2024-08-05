@@ -24,10 +24,12 @@ export const useOrcamentosStore = defineStore("orcamentos",
         };
 
         const createOrcamento = async (newOrcamento) => {
+            console.log(newOrcamento)
             state.loading = true;
             try {
-                state.orcamentos.push(await OrcamentosService.createOrcamento(newOrcamento));
+                state.orcamentos.push(await OrcamentosService.createOrcamentos(newOrcamento));
             } catch (error) {
+                console.log(error)
                 state.error = error;
             } finally {
                 state.loading = false;
