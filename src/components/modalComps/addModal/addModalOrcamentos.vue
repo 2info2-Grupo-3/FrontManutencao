@@ -4,55 +4,61 @@ import { useOrcamentosStore } from '@/stores/others/orcamentos.js';
 import { useClientesStore } from '@/stores/others/clientes.js';
 import { useServicosStore } from '@/stores/others/servicos.js';
 import { usePecasStore } from '@/stores/estoque/pecas.js';
+
 const orcamentosStore = useOrcamentosStore()
 const clientesStore = useClientesStore()
 const servicosStore = useServicosStore()
 const pecasStore = usePecasStore()
 
 const orcamento = reactive({
-    cliente: '',
+    cliente: null,  // Agora cliente é apenas o ID
     valor_total: 0,
     pecas_orcamento: [],
     servicos_orcamento: [],
 })
+
 onMounted(() => {
     orcamentosStore.getOrcamentos();
     servicosStore.getServicos();
     pecasStore.getPecas();
     clientesStore.getClientes();
 });
+
 const clientes = computed(() => clientesStore.state.clientes);
 const servicos = computed(() => servicosStore.state.servicos);
 const pecas = computed(() => pecasStore.state.pecas);
 
-const pecaf = ref('')
-const quantidadePeca = ref('')
+const pecaf = ref(null)
+const quantidadePeca = ref(1)
 
 const pecaAdd = () => {
-    const pecaAdd = pecaf.value
-    const quantiadeAdd = quantidadePeca.value
+    const pecaId = pecaf.value
+    const quantidade = quantidadePeca.value
     const peca = {
-        peca: pecaAdd,
-        quantidade: quantiadeAdd
+        peca: pecaId,
+        quantidade: quantidade
     }
     orcamento.pecas_orcamento.push(peca)
-    pecaf.value = ''
-    quantidadePeca.value = ''
+    pecaf.value = null
+    quantidadePeca.value = 1
 }
-const servicof = ref('')
+
+const servicof = ref(null)
 const servicoAdd = () => {
-    const servicoAdd = servicof.value
+    const servicoId = servicof.value
     const servico = {
-        servico: servicoAdd,
-        valor: servicoAdd.preco
+        servico: servicoId,
+        valor: servicos.value.find(servico => servico.id === servicoId).preco
     }
     orcamento.servicos_orcamento.push(servico)
-    servicof.value = ''
+    servicof.value = null
 }
+
 const salvarOrcamento = () => {
     orcamentosStore.createOrcamento(orcamento)
-    }
+}
 </script>
+
 <template>
     <div class="background">
         <div class="modalAdd">
@@ -61,29 +67,40 @@ const salvarOrcamento = () => {
                 <button @click="$emit('close')">X</button>
             </div>
         
-        <form @submit.prevent>
-            <div><label for="">Cliente:</label><select name="" id="" v-model="orcamento.cliente">
-                    <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.nome">{{ cliente.nome }}
-                    </option>
-                </select></div>
-            <!-- <div>
-                <label for="">Data:</label><input type="date" name="" id="" v-model="orcamento.data">
-            </div> -->
-            <div><label for="">Peças:</label><select name="" id="" v-model="pecaf">
-                    <option v-for="peca in pecas" :key="peca.id" :value="peca">{{ peca.nome }}</option>
-                </select>
+            <form @submit.prevent>
+                <div>
+                    <label for="">Cliente:</label>
+                    <select v-model="orcamento.cliente">
+                        <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nome }}</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="">Peças:</label>
+                    <select v-model="pecaf">
+                        <option v-for="peca in pecas" :key="peca.id" :value="peca.id">{{ peca.nome }}</option>
+                    </select>
+                    <div class="quantidade">
+                        <label for="">Quantidade:</label>
+                        <input type="number" v-model="quantidadePeca">
+                        <button @click="pecaAdd">Add</button>
+                    </div>
+                </div>
+
                 <div class="quantidade">
-                <label for="">Quantidade:</label><input type="number" v-model="quantidadePeca"><button
-                    @click="pecaAdd">Add</button></div>
-            </div><div>
-            <div class="quantidade"><label for="">Serviços:</label><select name="" id="" v-model="servicof">
-                    <option v-for="servico in servicos" :key="servico.id" :value="servico">{{ servico.nome }}</option>
-                </select><button @click="servicoAdd">Add</button></div></div>
-            <button @click="salvarOrcamento">Criar</button>
-        </form>
-    </div>
+                    <label for="">Serviços:</label>
+                    <select v-model="servicof">
+                        <option v-for="servico in servicos" :key="servico.id" :value="servico.id">{{ servico.nome }}</option>
+                    </select>
+                    <button @click="servicoAdd">Add</button>
+                </div>
+
+                <button type="submit" @click="salvarOrcamento">Criar</button>
+            </form>
+        </div>
     </div>
 </template>
+
 <style scoped>
 .background{
   width: 100%;

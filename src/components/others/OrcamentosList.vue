@@ -10,8 +10,8 @@ const orcamentosStore = useOrcamentosStore()
 const inputSearch = ref('')
 
 const addModalVisible = ref(false)
-onMounted(() => {
-  orcamentosStore.getOrcamentos()
+onMounted(async() => {
+  await orcamentosStore.getOrcamentos()
 })
 const orcamentos = computed(() => orcamentosStore.state.orcamentos)
 
@@ -54,6 +54,7 @@ const openModal = (orcamento) => {
         <h2>Detalhes</h2>
       </div>
       <div class="tableScroll">
+
         <div v-for="orcamento in orcamentos" :key="orcamento.id" class="bodytable">
           <div>
             <p>{{ orcamento.id }}</p>

@@ -5,6 +5,7 @@ import Headercomp from '@/components/Header/HeaderComp.vue'
 // import ServicosComp from '@/components/others/ServicosComp.vue'
 // import PecasList from '@/components/others/PecasList.vue'
 // import ClientsList from '@/components/others/ClientsList.vue'
+import OrcamentosList from '@/components/others/OrcamentosList.vue'
 
 import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores'
 
@@ -40,12 +41,12 @@ function cu(){
     <Headercomp/>
   </div>
   <div class="comp">
-    COMPONENTES ESTÃO COMENTADOS
-    <button @click="cu">Cu  </button>
+    <!-- COMPONENTES ESTÃO COMENTADOS
+    <button @click="cu">Cu  </button> -->
     <!-- <ServicosComp />
     <ClientsList/>
     <PecasList/> -->
-
+    <OrcamentosList/>
   </div>
 </div>
   </main>
