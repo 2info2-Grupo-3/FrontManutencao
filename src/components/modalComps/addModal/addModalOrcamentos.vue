@@ -39,6 +39,7 @@ const pecaAdd = () => {
         quantidade: quantidade
     }
     orcamento.pecas_orcamento.push(peca)
+    atualizarValorTotal();
     pecaf.value = null
     quantidadePeca.value = 1
 }
@@ -51,8 +52,23 @@ const servicoAdd = () => {
         valor: servicos.value.find(servico => servico.id === servicoId).preco
     }
     orcamento.servicos_orcamento.push(servico)
+    atualizarValorTotal();
     servicof.value = null
 }
+const atualizarValorTotal = () => {
+    let total = 0;
+    orcamento.pecas_orcamento.forEach(item => {
+        const peca = pecas.value.find(p => p.id === item.peca);
+        if (peca) {
+            total += Number(peca.preco * item.quantidade);
+        }
+    });
+    orcamento.servicos_orcamento.forEach(item => {
+        total += Number(item.valor);
+    });
+
+    orcamento.valor_total = total;
+};
 
 const salvarOrcamento = () => {
     orcamentosStore.createOrcamento(orcamento)
@@ -86,7 +102,7 @@ const salvarOrcamento = () => {
                         <button @click="pecaAdd">Add</button>
                     </div>
                 </div>
-
+                <div>
                 <div class="quantidade">
                     <label for="">Serviços:</label>
                     <select v-model="servicof">
@@ -94,6 +110,7 @@ const salvarOrcamento = () => {
                     </select>
                     <button @click="servicoAdd">Add</button>
                 </div>
+            </div>
 
                 <button type="submit" @click="salvarOrcamento">Criar</button>
             </form>
@@ -150,10 +167,17 @@ label{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 105%;   
+    width: 100%;   
+}
+.quantidade > label{
+    width: 30%;
 }
 .quantidade > button{
     width: 18%;
+}
+.quantidade > button:hover{
+    background-color: #55A603;
+    color: #fff;
 }
 .quantidade> select{
     width: 40%;
@@ -165,20 +189,20 @@ form > div> button{
 form {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: .25rem;
 }
 
 form > div {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem;
+  /* gap: .5rem; */
   align-items: center;
   width: 90%;
   margin: .25rem auto;
 }
 
 input {
-    margin-left: 1.5%;
+
     width: 40%;
     height: 2rem;
     padding: .5rem;

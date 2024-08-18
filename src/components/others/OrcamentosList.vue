@@ -1,25 +1,36 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { useOrcamentosStore } from '@/stores/others/orcamentos.js'
-// import { useClientesStore } from '@/stores/others/clientes.js';
-// import { usePecasStore } from '@/stores/estoque/pecas';
-// import { useServicosStore } from '@/stores/others/servicos.js';
-// import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue'
+import { useClientesStore } from '@/stores/others/clientes.js';
+import { usePecasStore } from '@/stores/estoque/pecas';
+import { useServicosStore } from '@/stores/others/servicos.js';
+import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue'
 import addModalOrcamentos from '@/components/modalComps/addModal/addModalOrcamentos.vue';
 const orcamentosStore = useOrcamentosStore()
+const pecasStore = usePecasStore()
+const servicosStore = useServicosStore()
+const clientesStore = useClientesStore()
 const inputSearch = ref('')
 
 const addModalVisible = ref(false)
 onMounted(async() => {
   await orcamentosStore.getOrcamentos()
+  await pecasStore.getPecas()
+  await servicosStore.getServicos()
+  await clientesStore.getClientes()
 })
 const orcamentos = computed(() => orcamentosStore.state.orcamentos)
+const clientes = computed(() => clientesStore.state.clientes);
+const servicos = computed(() => servicosStore.state.servicos);
+const pecas = computed(() => pecasStore.state.pecas);
+
 
 const isModalVisible = ref(false);
 const selectedOrcamento = ref(null);
 
 const openModal = (orcamento) => {
-  selectedOrcamento.value = (orcamento);
+  selectedOrcamento.value = orcamento;
+  console.log(selectedOrcamento.value)
   isModalVisible.value = true;
 };
 
@@ -28,6 +39,37 @@ const openModal = (orcamento) => {
 //     itemf.cliente.toLowerCase().includes(inputSearch.value.toLowerCase())
 //   )
 // }
+function getPosition(item, array) {
+  return array.indexOf(item)
+}
+const pecaAdd = ref(null);
+const quantidadePecaAdd = ref(1);
+const servicoAdd = ref(null);
+const quantidadeServicoAdd = ref(1);
+const addPeca = () =>{
+  const pecaId = pecaAdd.value
+  const quantidade = quantidadePecaAdd.value
+  const peca = {
+    peca: pecaId,
+    quantidade: quantidade
+  }
+  selectedOrcamento.value.pecas_orcamento.push(peca)
+  // orcamentosStore.updateOrcamento(selectedOrcamento)
+  pecaAdd.value = null
+  quantidadePecaAdd.value = 1
+}
+const addServico = () =>{
+  const servicoId = servicoAdd.value
+  const quantidade = quantidadeServicoAdd.value
+  const servico = {
+    servico: servicoId,
+    quantidade: quantidade
+  }
+  selectedOrcamento.value.servicos_orcamento.push(servico)
+  orcamentosStore.updateOrcamento(selectedOrcamento)
+  servicoAdd.value = null
+  quantidadeServicoAdd.value = 1
+}
 </script>
 <template>
   <article>
@@ -35,9 +77,8 @@ const openModal = (orcamento) => {
     <div class="inputSearch">
       <img src="../../../public/searchicon.svg" alt="" />
       <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
-      
+      <button @click="addModalVisible = true">Adicionar +</button>
     </div>
-    <button @click="addModalVisible = true">Adicionar</button>
     <div v-if="addModalVisible">
         <addModalOrcamentos @close="addModalVisible = false"/>
       </div>
@@ -65,7 +106,7 @@ const openModal = (orcamento) => {
           </div>
           <span></span>
           <div>
-            <p>{{ orcamento.valor_total.replace(".", ",") }}</p>
+            <p>{{ orcamento.valor_total }}</p>
           </div>
           <span></span>
           <div>
@@ -78,23 +119,60 @@ const openModal = (orcamento) => {
         </div>
       </div>
     
-      <!-- <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
+      <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
         <div class="modalInfo">
-        <div class="itemInfo"><p>ID: {{ selectedOrcamento?.id }}</p></div>
-        <div class="itemInfo"><label for="">Nome:</label><input type="text" v-model="selectedOrcamento.cliente"></div>
-        <div class="itemInfo"><label for="">CPF:</label><input type="text" v-model="selectedOrcamento.cpf"></div>
-        <div class="itemInfo"><label for="">Data de Nascimento:</label><input type="date" v-model="selectedOrcamento.data"></div>
-        <div class="itemInfo"><label for="">Telefone:</label><input type="text" v-model="selectedOrcamento.telefone"></div>
-        <div class="itemInfo"><label for="">Endereço:</label><input type="text" v-model="selectedOrcamento.endereco"></div>
-        <div class="itemInfo"><label for="">Cidade:</label><input type="text" v-model="selectedOrcamento.cidade"></div>
-        <div class="itemInfo"><label for="">CEP:</label><input type="text" v-model="selectedOrcamento.cep"></div>
-        <div class="itemInfo"><label for="">Email:</label><input type="text" v-model="selectedOrcamento.email"></div>
         <div class="itemInfo">
-        <button @click="clientesStore.updateCliente(selectedOrcamento)">Atualizar</button>
-        <button @click="clientesStore.deleteCliente(selectedOrcamento.id)">Excluir</button>
+          <p>ID: {{ selectedOrcamento?.id }}</p>
+        </div>
+        <div class="itemInfo">
+          <label for="">Cliente:</label>
+          <p>{{ selectedOrcamento.cliente }}</p>
+        </div>
+        <input type="text" v-model="selectedOrcamento.cliente_id" disabled>
+
+        <div class="itemInfo">
+          <label for="">CPF:</label>
+          <input type="date" v-model="selectedOrcamento.data">
+        </div>
+        <div class="itemInfo">
+          <label for="">Peças:</label>
+          <div class="pecaInfo" v-for="peca in selectedOrcamento.pecas_orcamento" :key="peca.peca.id">
+          <p>{{ peca.peca.nome }}</p>
+          <input type="number" v-model="peca.quantidade">
+          <button @click="selectedOrcamento.pecas_orcamento.splice(getPosition(peca, selectedOrcamento.pecas_orcamento), 1)">del</button>
+          </div>
+      </div>
+        <div class="itemInfo">
+          <label for="">Adicionar peça:</label>
+          <select name="" id="" v-model="pecaAdd">
+            <option value="" v-for="peca in pecas" :key="peca.id">{{ peca.nome }}</option>
+          </select>
+          <button @click="addPeca">add</button>
+        </div>
+        <div class="itemInfo">
+          <label for="">Serviços:</label>
+          <div class="servicoInfo" v-for="servico in selectedOrcamento.servicos_orcamento" :key="servico.servico.id">
+            <p>{{ servico.servico.nome }}</p>
+            <button @click="selectedOrcamento.servicos_orcamento.splice(getPosition(servico, selectedOrcamento.servicos_orcamento), 1)">del</button>
+          </div>
+        </div>
+        <div class="itemInfo">
+        <label for="">Adicionar serviço:</label>
+        <select name="" id="" v-model="servicoAdd">
+          <option value="" v-for="servico in servicos" :key="servico.id">{{ servico.nome }}</option>
+        </select>  
+        <button @click="addServico">add</button>
+        </div>
+        <div class="itemInfo">
+          <label for="">Valor total</label>
+          <input type="number" v-model="selectedOrcamento.valor_total">
+        </div>
+        <div class="itemInfo">
+        <button @click="orcamentosStore.updateOrcamento(selectedOrcamento.id, selectedOrcamento)">Atualizar</button>
+        <button @click="orcamentosStore.deleteOrcamento(selectedOrcamento.id)">Excluir</button>
       </div>
       </div>
-      </dataOrcamentosModal> -->
+      </dataOrcamentosModal>
     </div>
   </article>
 </template>
@@ -217,7 +295,7 @@ article {
 }
 .tableScroll{
   width: 100%;
-  max-height: 30rem;
+  max-height: 45vh;
   overflow-y: scroll;
 }
 .container > .tableScroll::-webkit-scrollbar{
