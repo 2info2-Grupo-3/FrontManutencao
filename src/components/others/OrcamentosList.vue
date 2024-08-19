@@ -20,7 +20,6 @@ onMounted(async() => {
   await clientesStore.getClientes()
 })
 const orcamentos = computed(() => orcamentosStore.state.orcamentos)
-const clientes = computed(() => clientesStore.state.clientes);
 const servicos = computed(() => servicosStore.state.servicos);
 const pecas = computed(() => pecasStore.state.pecas);
 
@@ -29,10 +28,26 @@ const isModalVisible = ref(false);
 const selectedOrcamento = ref(null);
 
 const openModal = (orcamento) => {
-  selectedOrcamento.value = orcamento;
-  console.log(selectedOrcamento.value)
-  isModalVisible.value = true;
+  selectedOrcamento.value = {
+    id: orcamento.id,
+    cliente: orcamento.cliente,
+    data: orcamento.data,
+    valor_total: parseFloat(orcamento.valor_total).toFixed(2),
+    pecas_orcamento: orcamento.pecas_orcamento.map(item => ({
+      peca: item.peca.id,
+      quantidade: item.quantidade
+    })),
+    servicos_orcamento: orcamento.servicos_orcamento.map(servico => ({
+      servico: servico.servico.id,
+      valor: parseFloat(servico.valor).toFixed(2)
+    }))
+  };
+  
+  // You can also handle any other actions you need to take when the modal is opened here
+  console.log(selectedOrcamento);
+  isModalVisible.value = true; // Assuming this controls the modal visibility
 };
+
 
 // function filteredList() {
 //   return orcamentos.value.filter((itemf) =>
@@ -47,26 +62,27 @@ const quantidadePecaAdd = ref(1);
 const servicoAdd = ref(null);
 const quantidadeServicoAdd = ref(1);
 const addPeca = () =>{
-  const pecaId = pecaAdd.value
+  const pecaId = pecaAdd.value.id
   const quantidade = quantidadePecaAdd.value
   const peca = {
     peca: pecaId,
     quantidade: quantidade
   }
   selectedOrcamento.value.pecas_orcamento.push(peca)
-  // orcamentosStore.updateOrcamento(selectedOrcamento)
+  console.log(selectedOrcamento.value)
   pecaAdd.value = null
   quantidadePecaAdd.value = 1
 }
 const addServico = () =>{
-  const servicoId = servicoAdd.value
-  const quantidade = quantidadeServicoAdd.value
+  console.log(servicoAdd);
+  const servicoId = servicoAdd.value.id
   const servico = {
     servico: servicoId,
-    quantidade: quantidade
+    valor: servicoAdd.value.valor,
   }
+  console.log(servico.value)
   selectedOrcamento.value.servicos_orcamento.push(servico)
-  orcamentosStore.updateOrcamento(selectedOrcamento)
+  console.log(selectedOrcamento.value)
   servicoAdd.value = null
   quantidadeServicoAdd.value = 1
 }
@@ -145,7 +161,7 @@ const addServico = () =>{
         <div class="itemInfo">
           <label for="">Adicionar peça:</label>
           <select name="" id="" v-model="pecaAdd">
-            <option value="" v-for="peca in pecas" :key="peca.id">{{ peca.nome }}</option>
+            <option :value="peca" v-for="peca in pecas" :key="peca.id">{{ peca.nome }}</option>
           </select>
           <button @click="addPeca">add</button>
         </div>
@@ -159,7 +175,7 @@ const addServico = () =>{
         <div class="itemInfo">
         <label for="">Adicionar serviço:</label>
         <select name="" id="" v-model="servicoAdd">
-          <option value="" v-for="servico in servicos" :key="servico.id">{{ servico.nome }}</option>
+          <option :value="servico" v-for="servico in servicos" :key="servico.id">{{ servico.nome }}</option>
         </select>  
         <button @click="addServico">add</button>
         </div>
