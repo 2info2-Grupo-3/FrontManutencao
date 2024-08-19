@@ -1,36 +1,27 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
-import { useOrcamentosStore } from '@/stores/others/orcamentos.js';
-import { useClientesStore } from '@/stores/others/clientes.js';
-import { useServicosStore } from '@/stores/others/servicos.js';
-import { usePecasStore } from '@/stores/estoque/pecas.js';
-
-const orcamentosStore = useOrcamentosStore()
-const clientesStore = useClientesStore()
-const servicosStore = useServicosStore()
-const pecasStore = usePecasStore()
-
+import { useOrcamentosStore, useClientesStore, useServicosStore, usePecasStore } from '@/stores/others/orcamentos.js';
+const orcamentosStore = useOrcamentosStore();
+const clientesStore = useClientesStore();
+const servicosStore = useServicosStore();
+const pecasStore = usePecasStore();
 const orcamento = reactive({
-    cliente: null,  // Agora cliente é apenas o ID
+    cliente: null,
     valor_total: 0,
     pecas_orcamento: [],
     servicos_orcamento: [],
-})
-
+});
 onMounted(() => {
     orcamentosStore.getOrcamentos();
     servicosStore.getServicos();
     pecasStore.getPecas();
     clientesStore.getClientes();
 });
-
 const clientes = computed(() => clientesStore.state.clientes);
 const servicos = computed(() => servicosStore.state.servicos);
 const pecas = computed(() => pecasStore.state.pecas);
-
-const pecaf = ref(null)
-const quantidadePeca = ref(1)
-
+const pecaf = ref(null);
+const quantidadePeca = ref(1);
 const pecaAdd = () => {
     const pecaId = pecaf.value
     const quantidade = quantidadePeca.value
@@ -42,9 +33,8 @@ const pecaAdd = () => {
     atualizarValorTotal();
     pecaf.value = null
     quantidadePeca.value = 1
-}
-
-const servicof = ref(null)
+};
+const servicof = ref(null);
 const servicoAdd = () => {
     const servicoId = servicof.value
     const servico = {
@@ -54,7 +44,7 @@ const servicoAdd = () => {
     orcamento.servicos_orcamento.push(servico)
     atualizarValorTotal();
     servicof.value = null
-}
+};
 const atualizarValorTotal = () => {
     let total = 0;
     orcamento.pecas_orcamento.forEach(item => {
@@ -69,12 +59,10 @@ const atualizarValorTotal = () => {
 
     orcamento.valor_total = total;
 };
-
 const salvarOrcamento = () => {
     orcamentosStore.createOrcamento(orcamento)
-}
+};
 </script>
-
 <template>
     <div class="background">
         <div class="modalAdd">
@@ -82,7 +70,6 @@ const salvarOrcamento = () => {
                 <h2>Adicionar Orçamento</h2>
                 <button @click="$emit('close')">X</button>
             </div>
-        
             <form @submit.prevent>
                 <div>
                     <label for="">Cliente:</label>
@@ -90,7 +77,6 @@ const salvarOrcamento = () => {
                         <option v-for="cliente in clientes" :key="cliente.id" :value="cliente.id">{{ cliente.nome }}</option>
                     </select>
                 </div>
-
                 <div>
                     <label for="">Peças:</label>
                     <select v-model="pecaf">
@@ -117,7 +103,6 @@ const salvarOrcamento = () => {
         </div>
     </div>
 </template>
-
 <style scoped>
 .background{
   width: 100%;
@@ -127,7 +112,6 @@ const salvarOrcamento = () => {
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  
 }
 .modalAdd {
   background-color: #333333;
@@ -191,18 +175,14 @@ form {
   flex-direction: column;
   gap: .25rem;
 }
-
 form > div {
   display: flex;
   flex-wrap: wrap;
-  /* gap: .5rem; */
   align-items: center;
   width: 90%;
   margin: .25rem auto;
 }
-
 input {
-
     width: 40%;
     height: 2rem;
     padding: .5rem;
@@ -226,7 +206,7 @@ button{
     width: 30%;
     margin: 1rem auto;
 }
-form> button:hover{
+form > button:hover{
     background-color: #55A603;
     color: #fff;
 }
