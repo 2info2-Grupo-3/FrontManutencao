@@ -1,6 +1,6 @@
 <script setup>
 
-const showLinkPecas = () =>{
+const showLinkPecas = () => {
     const pecasLinks = document.querySelector('.pecasLinks');
     pecasLinks.style.display = pecasLinks.style.display === 'none' ? 'block' : 'none';
     const setaAnimation = document.querySelector('.setaAnimation');
@@ -10,16 +10,17 @@ const showLinkPecas = () =>{
 
 <template>
     <div class="linkButtons">
-        <button><img src="../../../homeicon.svg" alt="">Home</button>
-        <button><img src="../../../personicon.svg" alt="">Clientes</button>
-        <button><img src="../../../orcamentoicon.svg" alt="">Orçamentos</button>
-        <button><img src="../../../faturamentoicon.svg" alt="">Orçamentos</button>
-        <button><img src="../../../servicosicon.svg" alt="">Serviços</button>
-        <button @click="showLinkPecas"><img src="../../../pecasicon.svg" alt="">Peças<img src="../../../setaicon.svg" alt="" class="setaAnimation"></button>
+        <button class="btn-aside"><img src="../../../homeicon.svg" alt="">Home</button>
+        <button class="btn-aside"><img src="../../../personicon.svg" alt="">Clientes</button>
+        <button class="btn-aside"><img src="../../../orcamentoicon.svg" alt="">Orçamentos</button>
+        <button class="btn-aside"><img src="../../../faturamentoicon.svg" alt="">Orçamentos</button>
+        <button class="btn-aside"><img src="../../../servicosicon.svg" alt="">Serviços</button>
+        <button class="btn-aside" @click="showLinkPecas"><img src="../../../pecasicon.svg" alt="">Peças<img src="../../../setaicon.svg"
+                alt="" class="setaAnimation"></button>
         <div class="pecasLinks">
-            <button><img src="../../../estoqueicon.svg" alt="">Estoque</button>
-            <button><img src="../../../entradasicon.svg" alt="">Entradas</button>
-            <button><img src="../../../saidasicon.svg" alt="">Saídas</button>
+            <button class="btn-pecas"><img src="../../../estoqueicon.svg" alt="">Estoque</button>
+            <button class="btn-pecas"><img src="../../../entradasicon.svg" alt="">Entradas</button>
+            <button class="btn-pecas"><img src="../../../saidasicon.svg" alt="">Saídas</button>
         </div>
     </div>
 </template>
@@ -31,32 +32,57 @@ const showLinkPecas = () =>{
     justify-content: center;
     align-items: center;
 }
-.pecasLinks{
+
+.pecasLinks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     display: none;
-    transition: .5s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
-.setaAnimation{
-    transition: .5s ease-in-out;
-}
-button{
+
+.btn-pecas {
+    display: flex;
+    align-items: center;
+    justify-items: center;
     cursor: pointer;
     border: none;
-    width: 100%;
-    height: 2rem;
+    width: 120%;
+    height: 3rem;
+    background: transparent;
+    color: white;
+    font-size: 1.5em;
+    transition: .3s ease-in-out;
+    border-radius: 10px;
+    margin-top: 0.5em;
+}
+
+.setaAnimation {
+    transition: 0.5s ease-in-out;
+}
+
+.btn-aside {
+    cursor: pointer;
+    border: none;
+    width: 80%;
+    height: 3rem;
     background: transparent;
     display: flex;
     align-items: center;
     color: white;
-    padding: .5rem;
-    font-size: 16px;
-    margin: .5rem auto;
+    padding: 0.5rem;
+    font-size: 1.5em;
+    margin: 0.5em;
     transition: .3s ease-in-out;
+    border-radius: 10px;
 }
-button:hover{
-    background: #1a1a1a;
+
+button:hover {
+    background: #0175c7;
 }
-button img{
+
+button img {
     width: 1.5rem;
-    margin: 0 .5rem;
+    margin: 0.5rem;
 }
 </style>

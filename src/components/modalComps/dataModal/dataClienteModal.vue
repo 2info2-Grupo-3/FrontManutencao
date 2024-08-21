@@ -24,7 +24,6 @@ const closeModal = () => {
         <div>
             <slot class="teste"></slot>
         </div>
-       
         </div>
     </div>
 </template>
