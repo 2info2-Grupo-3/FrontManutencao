@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from 'vue'
 import AsideComp from '@/components/Aside/AsideComp.vue'
-import ServicosComp from '@/components/others/ServicosComp.vue'
-import PecasList from '@/components/others/PecasList.vue'
+// import ServicosComp from '@/components/others/ServicosComp.vue'
+// import PecasList from '@/components/others/PecasList.vue'
 import ClientsList from '@/components/others/ClientsList.vue'
 
 import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores'
