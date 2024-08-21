@@ -13,7 +13,7 @@ class PecasService {
 
     async createPeca(data) {
         try {
-            const response = await api.post('pecas', data);
+            const response = await api.post('pecas/', data);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -22,7 +22,7 @@ class PecasService {
 
     async updatePeca(id, data) {
         try {
-            const response = await api.put(`pecas/${id}`, data);
+            const response = await api.put(`pecas/${id}/`, data);
             return response.data;
         } catch (error) {
             console.error(error);
