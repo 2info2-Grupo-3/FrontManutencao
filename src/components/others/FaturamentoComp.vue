@@ -29,7 +29,7 @@ onMounted(async () => {
 
 </script>
 <template>
-  <div class="container">
+  <div class="container" style="border:none">
     <div class="title"><h2>Faturamento atual</h2></div>
     <div class="body">
       <p>+ R$ {{ valorFaturamento.toFixed(2).replace(".", ",") }}</p>
@@ -40,7 +40,7 @@ onMounted(async () => {
 .container {
   width: 80%;
   height: 10rem;
-  box-shadow: 2px 2px  4px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
   border-radius: .5rem;
 }
 .title{
