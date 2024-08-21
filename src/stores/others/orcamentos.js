@@ -24,21 +24,24 @@ export const useOrcamentosStore = defineStore("orcamentos",
         };
 
         const createOrcamento = async (newOrcamento) => {
+            console.log(newOrcamento)
             state.loading = true;
             try {
-                state.orcamentos.push(await OrcamentosService.createOrcamento(newOrcamento));
+                state.orcamentos.push(await OrcamentosService.createOrcamentos(newOrcamento));
             } catch (error) {
+                console.log(error)
                 state.error = error;
             } finally {
                 state.loading = false;
             }
         };
 
-        const updateOrcamento = async (orcamento) => {
+        const updateOrcamento = async (id, orcamento) => {
             state.loading = true;
             try {
-                const index = state.orcamentos.findIndex((s) => s.id ===orcamento.id);
-                state.orcamentos[index] = await OrcamentosService.updateOrcamento(orcamento);
+                const index = id;
+                console.log(orcamento)
+                state.orcamentos[index] = await OrcamentosService.updateOrcamentos(index, orcamento);
             } catch (error) {
                 state.error = error;
             } finally {
@@ -51,7 +54,7 @@ export const useOrcamentosStore = defineStore("orcamentos",
             try {
                 const index = state.orcamentos.findIndex((s) => s.id === id);
                 state.orcamentos.splice(index, 1);
-                await OrcamentosService.deleteOrcamento(id);
+                await OrcamentosService.deleteOrcamentos(id);
             } catch (error) {
                 state.error = error;
             } finally {

@@ -13,6 +13,7 @@ class OrcamentosService {
 
     async createOrcamentos(data) {
         try {
+            console.log(data);
             const response = await api.post('orcamentos/', data);
             return response.data;
         } catch (error) {
