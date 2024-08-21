@@ -7,6 +7,7 @@ import Headercomp from '@/components/Header/HeaderComp.vue'
 // import ClientsList from '@/components/others/ClientsList.vue'
 import OrcamentosList from '@/components/others/OrcamentosList.vue'
 
+
 import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores'
 
 const storeOrcamentos = useOrcamentosStore()
@@ -47,6 +48,7 @@ function cu(){
     <ClientsList/>
     <PecasList/> -->
     <OrcamentosList/>
+
   </div>
 </div>
   </main>
