@@ -158,7 +158,7 @@ article {
   width: 100%;
   height: 100%;
   margin: auto;
-  border: 2px #333 solid;
+  color: #000000;
 }
 
 .itemInfo {
@@ -177,33 +177,33 @@ article {
   width: 60%;
   padding: .5rem;
   border-radius: 1rem;
-  border: 2px solid #333;
 }
 
 .itemInfo>button {
   margin-top: .5rem;
   width: 100%;
   padding: .5rem;
-  background-color: white;
-  color: #55A603;
+  background-color: #55A603;
+  color: #ffffff;
   border: none;
   border-radius: 1rem;
   cursor: pointer;
   transition: .3s;
 }
 
-.itemInfo>button:nth-child(2) {
-  color: #FF0000;
+.itemInfo>button:nth-child(2) {  
+  background-color: #FF0000; 
+  color: #ffffff;
 }
 
 .itemInfo>button:hover {
-  background-color: #55A603;
-  color: white;
+  background-color: #ffffff;
+  color: #55A603;
 }
 
 .itemInfo>button:hover:nth-child(2) {
-  background-color: #FF0000;
-  color: white;
+  background-color: #ffffff;
+  color: #FF0000;
 }
 
 .modalInfo>p {

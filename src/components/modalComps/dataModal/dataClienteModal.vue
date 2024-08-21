@@ -19,7 +19,7 @@ const closeModal = () => {
         <div class="modal">
             <div class="modalHeader">
                 <h2>Detalhes do Cliente</h2>
-            <button class="close-button" @click="closeModal">X</button>
+            <button class="close-button" @click="closeModal">x</button>
         </div>
         <div>
             <slot class="teste"></slot>
@@ -40,9 +40,9 @@ const closeModal = () => {
     z-index: 9;
 }
 .modal {
-    background-color: #333333;
+    background-color: #ffffff;
     padding: 1rem;
-    color: white;
+    color: rgb(255, 255, 255);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -45%);
@@ -51,7 +51,7 @@ const closeModal = () => {
     position: absolute;
     margin: auto;
     z-index: 10;
-    width: 40%;
+    width: 50%;
     gap: 20px;
     border-radius: 1rem;
 }
@@ -61,13 +61,14 @@ const closeModal = () => {
     align-items: center;
     margin-bottom: 1rem;
     padding: 1rem;
+    color: #000000;
 }
 .close-button {
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: white;
+    color: #000000;
 }
 
 </style>
