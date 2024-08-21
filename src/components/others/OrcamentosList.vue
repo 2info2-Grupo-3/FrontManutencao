@@ -3,6 +3,7 @@ import { onMounted, ref, computed } from 'vue';
 import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores/';
 import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue';
 import addModalOrcamentos from '@/components/modalComps/addModal/addModalOrcamentos.vue';
+import FaturamentoComp from './FaturamentoComp.vue';
 const orcamentosStore = useOrcamentosStore();
 const pecasStore = usePecasStore();
 const servicosStore = useServicosStore();
@@ -169,6 +170,7 @@ const addServico = () =>{
     </dataOrcamentosModal>
     </div>
   </article>
+  <FaturamentoComp />
 </template>
 <style scoped>
 article {
