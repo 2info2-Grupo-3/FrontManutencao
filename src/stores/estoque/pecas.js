@@ -36,8 +36,8 @@ export const usePecasStore = defineStore("pecas",
         const updatePeca = async (peca) => {
             state.loading = true;
             try {
-                const index = state.pecas.findIndex((s) => s.id ===peca.id);
-                state.pecas[index] = await PecasService.updatePeca(peca);
+                const index = state.pecas.findIndex((s) => s.id ===peca.id) +1;
+                state.pecas[index] = await PecasService.updatePeca(index, peca);
             } catch (error) {
                 state.error = error;
             } finally {
