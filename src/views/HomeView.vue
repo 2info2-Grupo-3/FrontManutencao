@@ -3,9 +3,9 @@ import { onMounted } from 'vue'
 import AsideComp from '@/components/Aside/AsideComp.vue'
 import Headercomp from '@/components/Header/HeaderComp.vue'
 // import ServicosComp from '@/components/others/ServicosComp.vue'
-
-import PecasList from '@/components/others/PecasList.vue'
+// import PecasList from '@/components/others/PecasList.vue'
 // import ClientsList from '@/components/others/ClientsList.vue'
+// import OrcamentosList from '@/components/others/OrcamentosList.vue'
 
 
 import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore } from '@/stores'
@@ -42,13 +42,10 @@ function cu(){
     <Headercomp/>
   </div>
   <div class="comp">
-    <!-- COMPONENTES ESTÃO COMENTADOS
-    <button @click="cu">Cu  </button>
-    <ServicosComp />
-    <ClientsList/> -->
-    <PecasList/> 
-
-
+    <!-- <ServicosComp /> -->
+    <!-- <ClientsList/> -->
+    <!-- <PecasList/>  -->
+    <!-- <OrcamentosList/> -->
   </div>
 </div>
   </main>
@@ -57,6 +54,7 @@ function cu(){
 <style scoped>
 main{
   width: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 5fr;
 }

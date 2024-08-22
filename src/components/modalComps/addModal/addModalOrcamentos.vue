@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
-import { useOrcamentosStore, useClientesStore, useServicosStore, usePecasStore } from '@/stores/others/orcamentos.js';
+import { useOrcamentosStore, useClientesStore, useServicosStore, usePecasStore } from '@/stores/';
 const orcamentosStore = useOrcamentosStore();
 const clientesStore = useClientesStore();
 const servicosStore = useServicosStore();
