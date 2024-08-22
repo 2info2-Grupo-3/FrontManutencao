@@ -33,37 +33,9 @@ function cu(){
 </script>
 
 <template>
-  <main>
-    <div>
-    <AsideComp/>
-  </div>
-  <div class="right">
-  <div>
-    <Headercomp/>
-  </div>
-  <div class="comp">
-    <!-- <ServicosComp /> -->
-    <!-- <ClientsList/> -->
-    <!-- <PecasList/>  -->
-    <!-- <OrcamentosList/> -->
-  </div>
-</div>
-  </main>
+  <div></div>
 </template>
 
 <style scoped>
-main{
-  width: 100%;
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-}
 
-.comp{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem;
-  flex-direction: column;
-}
 </style>
