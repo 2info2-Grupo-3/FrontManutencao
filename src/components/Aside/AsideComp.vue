@@ -12,25 +12,24 @@ import LinksComp from './LinksComp.vue';
 <style scoped>
 
 aside{
-    background-color: #333333;
+    width: 20rem;
+    position: fixed;
+    background-color: #0095FF;
     color: white;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
 }
 .title{
+    margin: 1.5rem;
     display: flex;
     align-items: center;
+    flex-direction: column-reverse;
     justify-content: center;
-    margin-top: 2rem;
-    margin-bottom: 50%;
 }
 .title img{
-    width: 2rem;
-    height: 2rem;
-}
-.title h1{
-    font-size: 26px;
-    margin-left: 1rem;
+    margin-top: 1em;
+    width: 10rem;
+    height: 10rem;
 }
 </style>

@@ -1,7 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import AsideComp from './components/Aside/AsideComp.vue';
-import HeaderComp from './components/Header/HeaderComp.vue';
 </script>
 
 <template>
@@ -10,9 +9,6 @@ import HeaderComp from './components/Header/HeaderComp.vue';
     <AsideComp/>
   </div>
   <div class="right">
-  <div>
-    <HeaderComp/>
-  </div>
   <div class="comp">
     <RouterView />
   </div>
