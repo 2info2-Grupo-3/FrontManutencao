@@ -91,7 +91,6 @@ function formatarIdade(data) {
         </div>
       </div>
     </div>
-
     <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
       <div class="modalInfo">
         <div class="itemInfo">
@@ -108,7 +107,7 @@ function formatarIdade(data) {
         <div class="itemInfo"><label for="">Cidade:</label><input type="text" v-model="selectedCliente.cidade"></div>
         <div class="itemInfo"><label for="">CEP:</label><input type="text" v-model="selectedCliente.cep"></div>
         <div class="itemInfo"><label for="">Email:</label><input type="text" v-model="selectedCliente.email"></div>
-        <div class="itemInfo">
+        <div class="itemInfo-btn">
           <button @click="clientesStore.updateCliente(selectedCliente)">Atualizar</button>
           <button @click="clientesStore.deleteCliente(selectedCliente.id)">Excluir</button>
         </div>
@@ -122,10 +121,12 @@ article {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: ;
   border-radius: .5rem;
-  padding: 10px;
+  height: 100%;
+  background-image: url('public/fundo-cliente.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .buttonsInfo {
@@ -152,17 +153,17 @@ article {
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  margin: auto;
-  border: 2px #333 solid;
+  width: 100%;
+  background-color: #E9F5F9;
 }
 
 .itemInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 5px;
-  margin: 5px 0px;
+  justify-content: center;
+  margin: 1em;
+  color: black;
 }
 
 .itemInfo>label {
@@ -172,34 +173,42 @@ article {
 .itemInfo>input {
   width: 60%;
   padding: .5rem;
-  border-radius: 1rem;
-  border: 2px solid #333;
+  border-radius: 0.4rem;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
-.itemInfo>button {
+.itemInfo-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.itemInfo-btn>button {
   margin-top: .5rem;
-  width: 100%;
+  width: 45%;
   padding: .5rem;
-  background-color: white;
-  color: #55A603;
+  background-color: #55A603;
+  color: #ffffff;
   border: none;
   border-radius: 1rem;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
+  display: flex;
 }
 
-.itemInfo>button:nth-child(2) {
+.itemInfo-btn>button:nth-child(2) {  
+  background-color: #FF0000; 
+  color: #ffffff;
+}
+
+.itemInfo-btn>button:hover {
+  background-color: #ffffff;
+  color: #55A603;
+}
+
+.itemInfo-btn>button:hover:nth-child(2) {
+  background-color: #ffffff;
   color: #FF0000;
-}
-
-.itemInfo>button:hover {
-  background-color: #55A603;
-  color: white;
-}
-
-.itemInfo>button:hover:nth-child(2) {
-  background-color: #FF0000;
-  color: white;
 }
 
 .modalInfo>p {
@@ -218,9 +227,8 @@ article {
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
-  width: 90%;
-  border: 2px #333 solid;
-  border-radius: .5rem;
+  width: 93%;
+  border-radius: 0.5rem;
 }
 
 .headertable {
@@ -229,9 +237,11 @@ article {
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
   height: 2rem;
-  background-color: #333333;
-  color: white;
-  padding: .5rem;
+  background-color: #E3E3E3;
+  color: rgb(124, 124, 124);
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
 }
 
 .headertable h2 {
@@ -242,13 +252,17 @@ article {
 .headertable span {
   height: 100%;
   width: 1px;
-  background-color: white;
+  background-color: E3E3E3;
 }
 
 .tablescrool {
-  width: 100%;
+  margin-top: 2em;
+  width: 105%;
   max-height: 30rem;
   overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .container>.tablescrool::-webkit-scrollbar {
@@ -256,12 +270,16 @@ article {
 }
 
 .bodytable {
+  margin: 0em 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
-  width: 100%;
+  width: 95%;
   color: black;
-  padding: .5rem;
-  border-bottom: 2px solid #333;
+  padding: 0.5rem;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: #ffffff;
 }
 
 .bodytable:-webkit-scrollbar {
@@ -283,7 +301,7 @@ article {
 .bodytable span {
   height: 100%;
   width: 1px;
-  background-color: #333333;
+  background-color: #ffffff;
 }
 
 .bodytable button {
@@ -340,6 +358,8 @@ article {
 }
 
 .container-title {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   font-size: 2em;
 }
 

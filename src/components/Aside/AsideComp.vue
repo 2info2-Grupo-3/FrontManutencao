@@ -12,14 +12,13 @@ import LinksComp from './LinksComp.vue';
 <style scoped>
 
 aside{
-    width: 20rem;
-    position: fixed;
     background-color: #0095FF;
     color: white;
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
+
 .title{
     margin: 1.5rem;
     display: flex;
@@ -27,6 +26,7 @@ aside{
     flex-direction: column-reverse;
     justify-content: center;
 }
+
 .title img{
     margin-top: 1em;
     width: 10rem;

@@ -9,9 +9,7 @@ import AsideComp from './components/Aside/AsideComp.vue';
       <AsideComp />
     </div>
     <div class="right">
-      <div class="comp">
-        <RouterView />
-      </div>
+      <RouterView />
     </div>
   </main>
 </template>
@@ -21,12 +19,5 @@ main {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 5fr;
-}
-
-.comp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 </style>
