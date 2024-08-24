@@ -23,11 +23,6 @@ onMounted(async () => {
   await storeServicos.getServicos()
   
 })
-
-function cu(){
-  alert('cu')
-  window.open('https://www.youtube.com/watch?v=QSmScADQxPw')
-}
 </script>
 
 <template>

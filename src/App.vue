@@ -5,29 +5,28 @@ import AsideComp from './components/Aside/AsideComp.vue';
 
 <template>
   <main>
-    <div>
-    <AsideComp/>
-  </div>
-  <div class="right">
-  <div class="comp">
-    <RouterView />
-  </div>
-</div>
+    <div class="left">
+      <AsideComp />
+    </div>
+    <div class="right">
+      <div class="comp">
+        <RouterView />
+      </div>
+    </div>
   </main>
 </template>
 <style scoped>
-main{
+main {
   width: 100%;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 5fr;
 }
 
-.comp{
+.comp {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3rem;
   flex-direction: column;
 }
 </style>
