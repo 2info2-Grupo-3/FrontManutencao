@@ -37,7 +37,7 @@ const closeModal = () => {
     z-index: 9;
 }
 .modal {
-    background-color: #333333;
+    background-color: #E9F5F9;
     padding: 1rem;
     color: white;
     top: 50%;
@@ -58,12 +58,13 @@ const closeModal = () => {
     align-items: center;
     margin-bottom: 1rem;
     padding: 1rem;
+    color: black;
 }
 .close-button {
     background: none;
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 </style>

@@ -32,16 +32,19 @@ const openModal = (data) => {
 
 <template>
   <article>
-    <h2>Entradas</h2>
-    <div class="inputSearch">
-      <input type="text" v-model="inputSearch" placeholder="Pesquisar entrada" />
-      <button @click="openModalAdd = !openModalAdd">Adicionar +</button>
+    <div class="container-title">
+      <h1>Gerenciamento de entradas</h1>
     </div>
-    
+    <div class="search-bar">
+      <div class="inputSearch">
+        <input type="text" v-model="inputSearch" placeholder="Pesquisar entrada" />
+        <img src="../../../public/searchicon.svg" alt="">
+      </div>
+      <button class="btn-adicionar" @click="openModalAdd = true">Adicionar entrada +</button>
+    </div>
     <div v-if="openModalAdd" style="width: 90%;">
       <addEntradaModal />
     </div>
-
     <div class="container">
       <div class="headertable">
         <h2>ID</h2>
@@ -54,10 +57,18 @@ const openModal = (data) => {
       </div>
 
       <div v-for="item in filteredList()" :key="item.id" class="bodytable" @click="openModal(item)">
-        <div><p>{{ item.id }}</p></div><span></span>
-        <div><p>{{ item.peca }}</p></div><span></span>
-        <div><p>{{ item.data }}</p></div><span></span>
-        <div><p>{{ item.quantidade }}</p></div><span></span>
+        <div>
+          <p>{{ item.id }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ item.peca }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ item.data }}</p>
+        </div><span></span>
+        <div>
+          <p>{{ item.quantidade }}</p>
+        </div><span></span>
       </div>
 
       <div v-if="filteredList().length <= 0" class="notFound">
@@ -86,32 +97,95 @@ article {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 90%;
-  border: 2px #333 solid;
   border-radius: .5rem;
-  padding: 10px;
+  height: 100%;
+  background-image: url('public/fundo-pecas.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container-title {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-size: 2em;
 }
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
-  width: 90%;
-  border: 2px #333 solid;
-  border-radius: .5rem;
+  width: 93%;
+  border-radius: 0.5rem;
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.inputSearch {
+  background-color: #E3E3E3;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.inputSearch>img {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1em;
+}
+
+.inputSearch input {
+  background-color: #E3E3E3;
+  width: 100%;
+  border: none;
+  font-size: 1em;
+  margin-left: 1em;
+}
+
+.inputSearch input:focus {
+  outline: none;
+}
+
+.btn-adicionar {
+  background-color: #5DB405;
+  border: none;
+  width: 20%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+  color: white;
+  transition: 0.5s ease-in-out;
+}
+
+.btn-adicionar:hover {
+  background-color: #509c04;
+  transition: 0.5s;
 }
 
 .headertable {
+  position: sticky;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
-  height: 2rem; 
-  background-color: #333333;
-  color: white;
-  padding: .5rem;
+  height: 2rem;
+  background-color: #E3E3E3;
+  color: rgb(124, 124, 124);
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  align-items: center;
 }
 
 .headertable h2 {
@@ -122,22 +196,26 @@ article {
 .headertable span {
   height: 100%;
   width: 1px;
-  background-color: white;
 }
 
 .bodytable {
+  margin: 0em 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
-  width: 100%;
+  width: 95%;
   color: black;
-  padding: .5rem;
-  border-bottom: 2px solid #333;
+  padding: 0.5rem;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: #ffffff;
 }
 
 .bodytable div {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 50px;
 }
 
 .bodytable p {
@@ -145,25 +223,17 @@ article {
   text-align: center;
 }
 
+.bodytable p {
+  font-size: 16px;
+  text-align: center;
+}
+
 .bodytable span {
   height: 100%;
   width: 1px;
-  background-color: #333333;
+  background-color: #33333300;
 }
 
-.inputSearch {
-  padding: 10px;
-  width: 50%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.inputSearch input {
-  width: 95%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #333;
-}
 
 .notFound {
   display: flex;

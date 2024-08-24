@@ -10,7 +10,7 @@ const servicosStore = useServicosStore();
 const clientesStore = useClientesStore();
 const inputSearch = ref('');
 const addModalVisible = ref(false);
-onMounted(async() => {
+onMounted(async () => {
   await orcamentosStore.getOrcamentos()
   await pecasStore.getPecas()
   await servicosStore.getServicos()
@@ -47,7 +47,7 @@ const pecaAdd = ref(null);
 const quantidadePecaAdd = ref(1);
 const servicoAdd = ref(null);
 const quantidadeServicoAdd = ref(1);
-const addPeca = () =>{
+const addPeca = () => {
   const pecaId = pecaAdd.value.id
   const quantidade = quantidadePecaAdd.value
   const peca = {
@@ -58,7 +58,7 @@ const addPeca = () =>{
   pecaAdd.value = null
   quantidadePecaAdd.value = 1
 };
-const addServico = () =>{
+const addServico = () => {
   const servicoId = servicoAdd.value.id
   const servicoValor = servicoAdd.value.preco
   const servicoF = {
@@ -72,14 +72,18 @@ const addServico = () =>{
 </script>
 <template>
   <article>
-    <h2>Orcamentos</h2>
-    <div class="inputSearch">
-      <img src="../../../public/searchicon.svg" alt="" />
-      <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
-      <button @click="addModalVisible = true">Adicionar +</button>
+    <div class="container-title">
+      <h1>Orçamentos</h1>
+    </div>
+    <div class="search-bar">
+      <div class="inputSearch">
+        <input type="text" v-model="inputSearch" placeholder="Pesquisar orçamento" />
+        <img src="../../../public/searchicon.svg" alt="">
+      </div>
+      <button class="btn-adicionar" @click="openModalAdd = true">Adicionar orçamento +</button>
     </div>
     <div v-if="addModalVisible">
-        <addModalOrcamentos @close="addModalVisible = false"/>
+      <addModalOrcamentos @close="addModalVisible = false" />
     </div>
     <div class="container">
       <div class="headertable">
@@ -116,72 +120,109 @@ const addServico = () =>{
           </div>
         </div>
       </div>
-    <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
+      <dataOrcamentosModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
         <div class="modalInfo">
-        <div class="itemInfo">
-          <p>ID: {{ selectedOrcamento?.id }}</p>
-        </div>
-        <div class="itemInfo">
-          <label for="">Cliente:</label>
-          <p>{{ selectedOrcamento.cliente }}</p>
-        </div>
-        <div class="itemInfo">
-          <label for="">CPF:</label>
-          <input type="date" v-model="selectedOrcamento.data">
-        </div>
-        <div class="itemInfo">
-          <label for="">Peças:</label>
-          <div class="pecaInfo" v-for="peca in selectedOrcamento.pecas_orcamento" :key="peca.id">
-            <p>{{ peca.nome }}</p>
-            <input type="number" v-model="peca.quantidade">
-            <button @click="selectedOrcamento.pecas_orcamento.splice(getPosition(peca, selectedOrcamento.pecas_orcamento), 1)">del</button>
+          <div class="itemInfo">
+            <p>ID: {{ selectedOrcamento?.id }}</p>
+          </div>
+          <div class="itemInfo">
+            <label for="">Cliente:</label>
+            <p>{{ selectedOrcamento.cliente }}</p>
+          </div>
+          <div class="itemInfo">
+            <label for="">CPF: </label>
+            <!-- QUE ISSO ?? -->
+            <input type="date" v-model="selectedOrcamento.data">
+          </div>
+          <div class="itemInfo">
+            <label for="">Peças:</label>
+            <div class="pecaInfo" v-for="peca in selectedOrcamento.pecas_orcamento" :key="peca.id">
+              <p>{{ peca.nome }}</p>
+              <input type="number" v-model="peca.quantidade">
+              <button
+                @click="selectedOrcamento.pecas_orcamento.splice(getPosition(peca, selectedOrcamento.pecas_orcamento), 1)">del
+              </button>
+            </div>
+          </div>
+          <div class="itemInfo">
+            <label for="">Adicionar peça:</label>
+            <select name="" id="" v-model="pecaAdd">
+              <option :value="peca" v-for="peca in pecas" :key="peca.id">{{ peca.nome }}</option>
+            </select>
+            <button @click="addPeca">add</button>
+          </div>
+          <div class="itemInfo">
+            <label for="">Serviços:</label>
+            <div class="servicoInfo" v-for="servico in selectedOrcamento.servicos_orcamento" :key="servico.id">
+              <p>{{ servico.nome }}</p>
+              <button
+                @click="selectedOrcamento.servicos_orcamento.splice(getPosition(servico, selectedOrcamento.servicos_orcamento), 1)">del</button>
+            </div>
+          </div>
+          <div class="itemInfo">
+            <label for="">Adicionar serviço:</label>
+            <select name="" id="" v-model="servicoAdd">
+              <option :value="servico" v-for="servico in servicos" :key="servico.id">{{ servico.nome }}</option>
+            </select>
+            <button @click="addServico">add</button>
+          </div>
+          <div class="itemInfo">
+            <label for="">Valor total</label>
+            <input type="number" v-model="selectedOrcamento.valor_total">
+          </div>
+          <div class="itemInfo-btn">
+            <button @click="orcamentosStore.updateOrcamento(selectedOrcamento.id, selectedOrcamento)">Atualizar</button>
+            <button @click="orcamentosStore.deleteOrcamento(selectedOrcamento.id)">Excluir</button>
           </div>
         </div>
-        <div class="itemInfo">
-          <label for="">Adicionar peça:</label>
-          <select name="" id="" v-model="pecaAdd">
-            <option :value="peca" v-for="peca in pecas" :key="peca.id">{{ peca.nome }}</option>
-          </select>
-          <button @click="addPeca">add</button>
-        </div>
-        <div class="itemInfo">
-          <label for="">Serviços:</label>
-          <div class="servicoInfo" v-for="servico in selectedOrcamento.servicos_orcamento" :key="servico.id">
-            <p>{{ servico.nome }}</p>
-            <button @click="selectedOrcamento.servicos_orcamento.splice(getPosition(servico, selectedOrcamento.servicos_orcamento), 1)">del</button>
-          </div>
-        </div>
-        <div class="itemInfo">
-          <label for="">Adicionar serviço:</label>
-          <select name="" id="" v-model="servicoAdd">
-            <option :value="servico" v-for="servico in servicos" :key="servico.id">{{ servico.nome }}</option>
-          </select>  
-          <button @click="addServico">add</button>
-        </div>
-        <div class="itemInfo">
-          <label for="">Valor total</label>
-          <input type="number" v-model="selectedOrcamento.valor_total">
-        </div>
-        <div class="itemInfo">
-          <button @click="orcamentosStore.updateOrcamento(selectedOrcamento.id, selectedOrcamento)">Atualizar</button>
-          <button @click="orcamentosStore.deleteOrcamento(selectedOrcamento.id)">Excluir</button>
-        </div>
-      </div>
-    </dataOrcamentosModal>
+      </dataOrcamentosModal>
     </div>
   </article>
   <FaturamentoComp />
 </template>
 <style scoped>
+
 article {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
   border-radius: .5rem;
-  padding: 10px;
+  height: 100%;
+  background-image: url('public/fundo-orcamentos.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
+.container-title {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-size: 2em;
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.btn-adicionar {
+  background-color: #5DB405;
+  border: none;
+  width: 20%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+  color: white;
+  transition: 0.5s ease-in-out;
+}
+
+.btn-adicionar:hover {
+  background-color: #509c04;
+  transition: 0.5s;
+}
+
 .buttonsInfo {
   display: flex;
   justify-content: center;
@@ -189,6 +230,8 @@ article {
   position: absolute;
   padding: 1rem 0rem;
 }
+
+
 .buttonsInfo button {
   padding: 10px;
   background-color: #fff;
@@ -201,51 +244,69 @@ article {
   font-weight: bold;
   transition: .3s;
 }
+
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  margin: auto;
-  border: 2px #333 solid;
+  width: 100%;
+  background-color: #E9F5F9;
 }
-.itemInfo{
+
+.itemInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 5px;
-  margin: 5px 0px;
+  justify-content: center;
+  margin: 1em;
+  color: black;
 }
-.itemInfo>label{
+
+.itemInfo>label {
   width: 30%;
 }
-.itemInfo>input{
+
+.itemInfo>input , select , div input {
   width: 60%;
   padding: .5rem;
-  border-radius: 1rem;
-  border: 2px solid #333;
+  border-radius: 0.4rem;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border: none;
 }
-.itemInfo > button{
+
+.itemInfo-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.itemInfo-btn>button {
   margin-top: .5rem;
-  width: 100%;
+  width: 45%;
   padding: .5rem;
-  background-color: white;
-  color: #55A603;
+  background-color: #55A603;
+  color: #ffffff;
   border: none;
   border-radius: 1rem;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
 }
-.itemInfo > button:nth-child(2){
+
+.itemInfo-btn>button:nth-child(2) {  
+  background-color: #FF0000; 
+  color: #ffffff;
+}
+
+.itemInfo-btn>button:hover {
+  background-color: #ffffff;
+  color: #55A603;
+}
+
+.itemInfo-btn>button:hover:nth-child(2) {
+  background-color: #ffffff;
   color: #FF0000;
 }
-.itemInfo > button:hover{
-  background-color: #55A603;
-  color: white;
-}
-.itemInfo > button:hover:nth-child(2){
-  background-color: #FF0000;
-  color: white;
-}
+
 .modalInfo>p {
   display: flex;
   justify-content: space-between;
@@ -254,6 +315,7 @@ article {
   gap: 5px;
   margin: 5px 0px;
 }
+
 .container {
   position: relative;
   display: flex;
@@ -261,115 +323,123 @@ article {
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
-  width: 90%;
-  border: 2px #333 solid;
-  border-radius: .5rem;
+  width: 93%;
+  border-radius: 0.5rem;
 }
+
 .headertable {
   position: sticky;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
   height: 2rem;
-  background-color: #333333;
-  color: white;
-  padding: .5rem;
+  background-color: #E3E3E3;
+  color: rgb(124, 124, 124);
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  align-items: center;
 }
+
 .headertable h2 {
   font-size: 16px;
   text-align: center;
 }
+
 .headertable span {
   height: 100%;
   width: 1px;
-  background-color: white;
 }
-.tableScroll{
-  width: 100%;
-  max-height: 45vh;
+
+.tableScroll {
+  margin-top: 2em;
+  width: 105%;
+  max-height: 20rem;
   overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
-.container > .tableScroll::-webkit-scrollbar{
+
+.container>.tableScroll::-webkit-scrollbar {
   display: none;
 }
+
 .bodytable {
+  margin: 0em 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
-  width: 100%;
+  width: 95%;
   color: black;
-  padding: .5rem;
-  border-bottom: 2px solid #333;
+  padding: 0.5rem;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: #ffffff;
 }
-.bodytable:-webkit-scrollbar{
+
+.bodytable:-webkit-scrollbar {
   display: none;
 }
+
 .bodytable div {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50px;
 }
-.bodytable div button{
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 1rem;
-  padding: .5rem;
-  cursor: pointer;
-}
+
 .bodytable p {
   font-size: 16px;
   text-align: center;
 }
+
 .bodytable span {
   height: 100%;
   width: 1px;
-  background-color: #333333;
+  background-color: #ffffff;
 }
-.bodytable button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
+
+
+.bodytable div button {
+  background-color: #509c04;
   color: white;
   border: none;
-  margin: 0 .5rem;
-  border-radius: .5rem;
+  border-radius: 0.5em;
+  padding: .5rem;
   cursor: pointer;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
 }
-.bodytable button img {
-  width: 1.5rem;
-  height: 1.5rem;
-}
+
 .inputSearch {
-  width: 50%;
+  background-color: #E3E3E3;
+  width: 70%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 2px solid #333;
-  border-radius: 1.5rem;
-  padding: .5rem;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
-.inputSearch > img{
+
+.inputSearch>img {
   width: 1.5rem;
   height: 1.5rem;
-  margin-right: 1rem;
+  margin-right: 1em;
 }
+
 .inputSearch input {
-  width: 85%;
-  border: none
+  background-color: #E3E3E3;
+  width: 100%;
+  border: none;
+  font-size: 1em;
+  margin-left: 1em;
 }
+
 .inputSearch input:focus {
   outline: none;
 }
-.inputSearch > button{
-  width: 15%;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 1rem;
-  height: 1.5rem;
-}
+
 .notFound {
   display: flex;
   justify-content: center;

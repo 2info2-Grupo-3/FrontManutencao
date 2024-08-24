@@ -42,7 +42,7 @@ function formatarIdade(data) {
     </div>
     <div class="search-bar">
       <div class="inputSearch">
-        <input type="text" v-model="inputSearch" placeholder="Pesquisar Cliente" />
+        <input type="text" v-model="inputSearch" placeholder="Pesquisar cliente" />
         <img src="../../../public/searchicon.svg" alt="">
       </div>
       <button class="btn-adicionar" @click="openModalAdd = true">Adicionar cliente +</button>
@@ -194,6 +194,7 @@ article {
   cursor: pointer;
   transition: 0.3s;
   display: flex;
+  justify-content: center;
 }
 
 .itemInfo-btn>button:nth-child(2) {  
@@ -242,6 +243,7 @@ article {
   padding: 0.5rem;
   border-radius: 5px;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  align-items: center;
 }
 
 .headertable h2 {
@@ -252,13 +254,12 @@ article {
 .headertable span {
   height: 100%;
   width: 1px;
-  background-color: E3E3E3;
 }
 
 .tablescrool {
   margin-top: 2em;
   width: 105%;
-  max-height: 30rem;
+  max-height: 40rem;
   overflow-y: scroll;
   display: flex;
   align-items: center;
@@ -304,22 +305,6 @@ article {
   background-color: #ffffff;
 }
 
-.bodytable button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  color: white;
-  border: none;
-  margin: 0 .5rem;
-  border-radius: .5rem;
-  cursor: pointer;
-}
-
-.bodytable button img {
-  width: 1.5rem;
-  height: 1.5rem;
-}
 
 .search-bar {
   width: 100%;
