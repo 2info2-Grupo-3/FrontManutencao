@@ -1,7 +1,5 @@
 <script setup>
 import { onMounted } from 'vue'
-import AsideComp from '@/components/Aside/AsideComp.vue'
-import Headercomp from '@/components/Header/HeaderComp.vue'
 // import ServicosComp from '@/components/others/ServicosComp.vue'
 // import PecasList from '@/components/others/PecasList.vue'
 // import ClientsList from '@/components/others/ClientsList.vue'
@@ -25,11 +23,6 @@ onMounted(async () => {
   await storeServicos.getServicos()
   
 })
-
-function cu(){
-  alert('cu')
-  window.open('https://www.youtube.com/watch?v=QSmScADQxPw')
-}
 </script>
 
 <template>
