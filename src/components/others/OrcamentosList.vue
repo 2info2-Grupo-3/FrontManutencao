@@ -80,7 +80,7 @@ const addServico = () => {
         <input type="text" v-model="inputSearch" placeholder="Pesquisar orçamento" />
         <img src="../../../public/searchicon.svg" alt="">
       </div>
-      <button class="btn-adicionar" @click="openModalAdd = true">Adicionar orçamento +</button>
+      <button class="btn-adicionar" @click="addModalVisible = !addModalVisible">Adicionar orçamento +</button>
     </div>
     <div v-if="addModalVisible">
       <addModalOrcamentos @close="addModalVisible = false" />
@@ -177,8 +177,8 @@ const addServico = () => {
         </div>
       </dataOrcamentosModal>
     </div>
+    <FaturamentoComp />
   </article>
-  <FaturamentoComp />
 </template>
 <style scoped>
 
