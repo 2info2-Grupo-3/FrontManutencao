@@ -27,7 +27,7 @@ onMounted(async () => {
       <h1> Elvis Tech</h1>
       <img class="icon" src="/public/icon-elvis-blue.svg" alt="logo" />
     </div>
-    <div class="container-btns">
+    <div class="container-links">
       <router-link to="/clientes" class="btn"><h2>Clientes</h2><img src="/public/client-icon-white.svg"></router-link>
       <router-link to="/orcamentos" class="btn"><h2>Orçamentos</h2><img src="/public/orcamentoicon.svg"></router-link>
       <router-link to="/servicos" class="btn"><h2>Serviços</h2><img src="/public/servicosicon.svg"></router-link>
@@ -71,11 +71,15 @@ onMounted(async () => {
   height: 250px;
 }
 
-.container-btns{
-  display: flex;
+.container-links{
+  width: 60%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr ;
   justify-content: space-evenly;
   align-items: center;
   height: 60%;
+  justify-items: center;
 }
 
 a {
@@ -85,7 +89,7 @@ a {
   justify-content: center;
   border-radius: 20px;
   width: 12em;
-  height: 1em;
+  height: 12em;
   color: white;
   background-color: #0095FF;
   text-decoration: none;
