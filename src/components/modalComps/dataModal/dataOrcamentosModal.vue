@@ -19,7 +19,7 @@ const closeModal = () => {
         <div class="modal">
             <div class="modalHeader">
                 <h2>Detalhes do Orçamento</h2>
-            <button class="close-button" @click="closeModal">X</button>
+            <button class="close-button" @click="closeModal">x</button>
         </div>
         <div>
             <slot class="teste"></slot>
