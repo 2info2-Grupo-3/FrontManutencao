@@ -69,7 +69,7 @@ const salvarOrcamento = () => {
         <div class="modalAdd">
             <div class="modalHeader">
                 <h2>Adicionar Orçamento</h2>
-                <button @click="$emit('close')">X</button>
+                <button @click="$emit('close')">x</button>
             </div>
             <form @submit.prevent>
                 <div>
@@ -118,9 +118,9 @@ const salvarOrcamento = () => {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .modalAdd {
-  background-color: #333333;
+  background-color: #E9F5F9;
   padding: 1rem;
-  color: white;
+  color: rgb(0, 0, 0);
   align-items: center;
   top: 50%;
   left: 50%;
@@ -129,6 +129,7 @@ const salvarOrcamento = () => {
   position: absolute;
   z-index: 10;
   border-radius: 1rem;
+  border: none;
 }
 .modalHeader{
     display: flex;
@@ -141,10 +142,10 @@ const salvarOrcamento = () => {
     background-color: transparent;
     width: 5%;
     font-size: 20px;
-    color: white;
+    color: rgb(0, 0, 0);
     margin: 0;
     border-radius: 1rem;
-    border: 2px solid #333;
+    
     cursor: pointer;
     transition: .3s ease-in-out;
 }
@@ -190,28 +191,30 @@ input {
     width: 40%;
     height: 2rem;
     padding: .5rem;
-    border-radius: 1rem;
-    border: 2px solid #333;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
 }
 select{
     width: 60%;
-    height: 2rem;
-    border-radius: 1rem;
-    border: 2px solid #333;
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
 }
 button{
     padding: .5rem;
     border-radius: 1rem;
-    border: 2px solid #333;
-    background-color: #fff;
-    color: #55A603;
+    background-color: #55A603;
+    color: #ffffff;
     cursor: pointer;
     transition: .3s ease-in-out;
     width: 30%;
     margin: 1rem auto;
+    border:  none
 }
 form > button:hover{
-    background-color: #55A603;
-    color: #fff;
+    background-color: #ffffff;
+    color: #55A603;
 }
 </style>

@@ -69,6 +69,7 @@ const addServico = () => {
   servicoAdd.value = null
   quantidadeServicoAdd.value = 1
 };
+
 </script>
 <template>
   <article>
@@ -134,28 +135,20 @@ const addServico = () => {
             <input type="date" v-model="selectedOrcamento.data">
           </div>
           <div class="itemInfo">
-            <label for="">Peças:</label>
-            <div class="pecaInfo" v-for="peca in selectedOrcamento.pecas_orcamento" :key="peca.id">
-              <p>{{ peca.nome }}</p>
-              <input type="number" v-model="peca.quantidade">
-              <button
-                @click="selectedOrcamento.pecas_orcamento.splice(getPosition(peca, selectedOrcamento.pecas_orcamento), 1)">del
-              </button>
-            </div>
-          </div>
-          <div class="itemInfo">
             <label for="">Adicionar peça:</label>
             <select name="" id="" v-model="pecaAdd">
               <option :value="peca" v-for="peca in pecas" :key="peca.id">{{ peca.nome }}</option>
             </select>
-            <button @click="addPeca">add</button>
+            <button class="btn-add" @click="addPeca">add</button>
           </div>
           <div class="itemInfo">
-            <label for="">Serviços:</label>
-            <div class="servicoInfo" v-for="servico in selectedOrcamento.servicos_orcamento" :key="servico.id">
-              <p>{{ servico.nome }}</p>
-              <button
-                @click="selectedOrcamento.servicos_orcamento.splice(getPosition(servico, selectedOrcamento.servicos_orcamento), 1)">del</button>
+            <label for="">Peças:</label>
+            <div class="pecaInfo" v-for="peca in selectedOrcamento.pecas_orcamento" :key="peca.id">
+              <p>{{ peca.nome }}</p>
+              <input type="number" v-model="peca.quantidade">
+              <button class="btn-del"
+                @click="selectedOrcamento.pecas_orcamento.splice(getPosition(peca, selectedOrcamento.pecas_orcamento), 1)">del
+              </button>
             </div>
           </div>
           <div class="itemInfo">
@@ -163,12 +156,21 @@ const addServico = () => {
             <select name="" id="" v-model="servicoAdd">
               <option :value="servico" v-for="servico in servicos" :key="servico.id">{{ servico.nome }}</option>
             </select>
-            <button @click="addServico">add</button>
+            <button class="btn-add" @click="addServico">add</button>
+          </div>
+          <div class="itemInfo">
+            <label for="">Serviços:</label>
+            <div class="servicoInfo" v-for="servico in selectedOrcamento.servicos_orcamento" :key="servico.id">
+              <p>{{ servico.nome }}</p>
+              <button class="btn-del-pa"
+                @click="selectedOrcamento.servicos_orcamento.splice(getPosition(servico, selectedOrcamento.servicos_orcamento), 1)">del</button>
+            </div>
           </div>
           <div class="itemInfo">
             <label for="">Valor total</label>
             <input type="number" v-model="selectedOrcamento.valor_total">
           </div>
+
           <div class="itemInfo">
             <label for="">Status:</label>
             <select name="" id="" v-model="selectedOrcamento.status">
@@ -178,17 +180,17 @@ const addServico = () => {
             </select>
           </div>
           <div class="itemInfo-btn">
+        </div>
+        <div class="itemInfo-btn">
             <button @click="orcamentosStore.updateOrcamento(selectedOrcamento.id, selectedOrcamento)">Atualizar</button>
             <button @click="orcamentosStore.deleteOrcamento(selectedOrcamento.id)">Excluir</button>
           </div>
-        </div>
       </dataOrcamentosModal>
     </div>
     <FaturamentoComp />
   </article>
 </template>
 <style scoped>
-
 article {
   display: flex;
   flex-direction: column;
@@ -254,12 +256,14 @@ article {
 
 .modalInfo {
   display: flex;
+  align-items: center;
   flex-direction: column;
   width: 100%;
   background-color: #E9F5F9;
 }
 
 .itemInfo {
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -269,14 +273,15 @@ article {
 }
 
 .itemInfo>label {
-  width: 30%;
+  width: 20%;
 }
 
-.itemInfo>input , select , div input {
+.itemInfo>input,
+select,
+div input {
   width: 60%;
   padding: .5rem;
   border-radius: 0.4rem;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
   border: none;
 }
 
@@ -299,8 +304,8 @@ article {
   justify-content: center;
 }
 
-.itemInfo-btn>button:nth-child(2) {  
-  background-color: #FF0000; 
+.itemInfo-btn>button:nth-child(2) {
+  background-color: #FF0000;
   color: #ffffff;
 }
 
@@ -444,6 +449,50 @@ article {
 .inputSearch input:focus {
   outline: none;
 }
+.btn-add {
+  padding: .5rem;
+  border-radius: 1rem;
+  background-color: #55A603;
+  color: #ffffff;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+  width: 30%;
+  margin: 1em;
+  border: none;
+
+}
+
+.btn-del {
+  padding: .5rem;
+  border-radius: 1rem;
+  background-color: #ff0000;
+  color: #ffffff;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+  width: 20%;
+  margin: 1em;
+  border: none;
+}
+
+.btn-del-pa {
+  padding: .5rem;
+  border-radius: 1rem;
+  background-color: #ff0000;
+  color: #ffffff;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+  width: 30%;
+  margin: 1em;
+  border: none;
+}
+
+.servicoInfo {
+  width: 20%;
+  display: flex;
+  align-items: center;
+}
+
+
 .notFound {
   display: flex;
   justify-content: center;
