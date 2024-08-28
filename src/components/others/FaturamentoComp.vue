@@ -6,9 +6,7 @@ const orcamentos = computed(() => orcamentosStore.state.orcamentos);
 const valorFaturamento = ref(0)
 
 function cu() {
-    console.log("asdasdasdasd")
    for (const orcamento of orcamentos.value) {
-     console.log(orcamento)
      if (orcamento.status == 3) {
        valorFaturamento.value += Number(orcamento.valor_total)
      }

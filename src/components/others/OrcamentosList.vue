@@ -170,6 +170,16 @@ const addServico = () => {
             <label for="">Valor total</label>
             <input type="number" v-model="selectedOrcamento.valor_total">
           </div>
+
+          <div class="itemInfo">
+            <label for="">Status:</label>
+            <select name="" id="" v-model="selectedOrcamento.status">
+              <option :value="1">Draft</option>
+              <option :value="2">Em progresso</option>
+              <option :value="3">Finalizado</option>
+            </select>
+          </div>
+          <div class="itemInfo-btn">
         </div>
         <div class="itemInfo-btn">
             <button @click="orcamentosStore.updateOrcamento(selectedOrcamento.id, selectedOrcamento)">Atualizar</button>
@@ -429,7 +439,6 @@ div input {
   height: 1.5rem;
   margin-right: 1em;
 }
-
 .inputSearch input {
   background-color: #E3E3E3;
   width: 100%;
@@ -437,11 +446,9 @@ div input {
   font-size: 1em;
   margin-left: 1em;
 }
-
 .inputSearch input:focus {
   outline: none;
 }
-
 .btn-add {
   padding: .5rem;
   border-radius: 1rem;
@@ -484,6 +491,7 @@ div input {
   display: flex;
   align-items: center;
 }
+
 
 .notFound {
   display: flex;

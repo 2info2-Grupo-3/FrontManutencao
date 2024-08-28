@@ -7,6 +7,7 @@ const servicosStore = useServicosStore();
 const pecasStore = usePecasStore();
 const orcamento = reactive({
     cliente: null,
+    status: 0,
     valor_total: 0,
     pecas_orcamento: [],
     servicos_orcamento: [],
@@ -97,6 +98,9 @@ const salvarOrcamento = () => {
                     <button @click="servicoAdd">Add</button>
                 </div>
             </div>
+            <div>
+                <label for="">Status:</label>
+                <select name="" id="" v-model="orcamento.status"><option :value=1>Draft</option><option :value=2>Em progresso</option><option :value=3>Finalizado</option></select></div>
 
                 <button type="submit" @click="salvarOrcamento">Criar</button>
             </form>
