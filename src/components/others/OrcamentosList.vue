@@ -273,6 +273,7 @@ div input {
   padding: .5rem;
   border-radius: 0.4rem;
   border: none;
+  background-color: white;
 }
 
 .itemInfo-btn {
