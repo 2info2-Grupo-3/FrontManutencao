@@ -131,7 +131,6 @@ const addServico = () => {
           </div>
           <div class="itemInfo">
             <label for="">CPF: </label>
-            <!-- QUE ISSO ?? -->
             <input type="date" v-model="selectedOrcamento.data">
           </div>
           <div class="itemInfo">
@@ -169,6 +168,14 @@ const addServico = () => {
           <div class="itemInfo">
             <label for="">Valor total</label>
             <input type="number" v-model="selectedOrcamento.valor_total">
+          </div>
+          <div class="itemInfo">
+            <label for="">Status:</label>
+            <select name="" id="" v-model="selectedOrcamento.status">
+              <option :value="1">Draft</option>
+              <option :value="2">Em progresso</option>
+              <option :value="3">Finalizado</option>
+            </select>
           </div>
           <div class="itemInfo-btn">
             <button @click="orcamentosStore.updateOrcamento(selectedOrcamento.id, selectedOrcamento)">Atualizar</button>
@@ -427,7 +434,6 @@ article {
   height: 1.5rem;
   margin-right: 1em;
 }
-
 .inputSearch input {
   background-color: #E3E3E3;
   width: 100%;
@@ -435,11 +441,9 @@ article {
   font-size: 1em;
   margin-left: 1em;
 }
-
 .inputSearch input:focus {
   outline: none;
 }
-
 .notFound {
   display: flex;
   justify-content: center;
