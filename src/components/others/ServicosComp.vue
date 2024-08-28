@@ -41,10 +41,15 @@ const formatarServico = (servico) => {
 
 <template>
   <article>
-    <h2>Serviços</h2>
-    <div class="inputSearch">
-      <input type="text" v-model="inputSearch" placeholder="Pesquisar Serviço" />
-      <button @click="openModalAdd = !openModalAdd">Adicionar +</button>
+    <div class="container-title">
+      <h1>Serviços</h1>
+    </div>
+    <div class="search-bar">
+      <div class="inputSearch">
+        <input type="text" v-model="inputSearch" placeholder="Pesquisar serviço" />
+        <img src="../../../public/searchicon.svg" alt="">
+      </div>
+      <button class="btn-adicionar" @click="openModalAdd = true">Adicionar serviço</button>
     </div>
     <div v-if="openModalAdd" style="width: 90%;">
       <addServicoModal />
@@ -81,16 +86,26 @@ const formatarServico = (servico) => {
     </div>
 
     <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
-      <h3>Detalhes do Servico</h3>
       <div class="modalInfo">
-        <p>ID: {{ selectedServico?.id }}</p>
-        <p>Nome:<input type="text" v-model="selectedServico.nome"></p>
-        <p>Nome:<input type="text" v-model="selectedServico.preco"></p>
-        <p>Nome:<input type="text" v-model="selectedServico.tempo"></p>
-      </div>
-      <div class="buttonsInfo">
-        <button @click="servicosStore.updateServico(selectedServico)">Atualizar</button>
-        <button @click="servicosStore.deleteServico(selectedServico.id)">Excluir</button>
+        <div class="itemInfo">
+          <p>ID: {{ selectedServico?.id }}</p>
+        </div>
+        <div class="itemInfo">
+          <label>Nome:</label>
+          <input type="text" v-model="selectedServico.nome">
+        </div>
+        <div class="itemInfo">
+          <label>Preço:</label>
+          <input type="text" v-model="selectedServico.preco">
+        </div>
+        <div class="itemInfo">
+          <label>Tempo:</label>
+          <input type="text" v-model="selectedServico.tempo">
+        </div>
+        <div class="itemInfo-btn">
+          <button @click="servicosStore.updateServico(selectedServico)">Atualizar</button>
+          <button @click="servicosStore.deleteServico(selectedServico.id)">Excluir</button>
+        </div>
       </div>
     </dataClienteModal>
   </article>
@@ -101,40 +116,48 @@ article {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  border-radius: .5rem;
+  height: 100%;
+  background-image: url('public/fundo-servico.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container-title {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-size: 2em;
+}
+
+.search-bar {
   width: 100%;
-  border: 2px #333 solid;
-  border-radius: .5rem;
-  padding: 10px;
-}
-
-
-.buttonsInfo {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  position: absolute;
-  padding: 1rem 0rem;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.buttonsInfo button {
-  padding: 10px;
-  background-color: #fff;
-  color: #333;
-  border-radius: .5rem;
-  cursor: pointer;
-  width: 100px;
-  margin: 0 10px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: .3s;
+.btn-adicionar {
+  background-color: #5DB405;
+  border: none;
+  width: 20%;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+  color: white;
+  transition: 0.5s ease-in-out;
+}
+
+.btn-adicionar:hover {
+  background-color: #509c04;
+  transition: 0.5s;
 }
 
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  border: 2px #333 solid;
+  width: 100%;
+  background-color: #E9F5F9;
 }
 
 .modalInfo>p {
@@ -147,24 +170,33 @@ article {
 }
 
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 2rem;
-  width: 90%;
-  border: 2px #333 solid;
-  border-radius: .5rem;
+  width: 93%;
+  border-radius: 0.5rem;
+}
+
+.container>.tablescrool::-webkit-scrollbar {
+  display: none;
 }
 
 .headertable {
+  position: sticky;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
   height: 2rem;
-  background-color: #333333;
-  color: white;
-  padding: .5rem;
+  background-color: #E3E3E3;
+  color: rgb(124, 124, 124);
+  padding: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  margin-bottom: 2em;
 }
 
 .headertable h2 {
@@ -175,16 +207,23 @@ article {
 .headertable span {
   height: 100%;
   width: 1px;
-  background-color: white;
 }
 
 .bodytable {
+  margin: 0em 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
   color: black;
-  padding: .5rem;
-  border-bottom: 2px solid #333;
+  padding: 0.5rem;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.bodytable:-webkit-scrollbar {
+  display: none;
 }
 
 .bodytable div {
@@ -195,45 +234,107 @@ article {
 }
 
 .bodytable p {
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 }
 
 .bodytable span {
   height: 100%;
   width: 1px;
-  background-color: #333333;
-}
-
-.bodytable button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  color: white;
-  border: none;
-  margin: 0 .5rem;
-  border-radius: .5rem;
-  cursor: pointer;
-}
-
-.bodytable button img {
-  width: 1.5rem;
-  height: 1.5rem;
+  background-color: #ffffff;
 }
 
 .inputSearch {
-  padding: 10px;
-  width: 50%;
+  background-color: #E3E3E3;
+  width: 70%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.inputSearch>img {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1em;
 }
 
 .inputSearch input {
-  width: 95%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #333;
+  background-color: #E3E3E3;
+  width: 100%;
+  border: none;
+  font-size: 1em;
+  margin-left: 1em;
+}
+
+.inputSearch input:focus {
+  outline: none;
+}
+
+.itemInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
+  color: black;
+}
+
+.itemInfo>label {
+  width: 20%;
+}
+
+.itemInfo>input,
+select,
+div input {
+  width: 60%;
+  padding: .5rem;
+  border-radius: 0.4rem;
+  border: none;
+}
+
+.itemInfo>input {
+  width: 60%;
+  padding: .5rem;
+  border-radius: 0.4rem;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+.itemInfo-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.itemInfo-btn>button {
+  margin-top: .5rem;
+  width: 45%;
+  padding: .5rem;
+  background-color: #55A603;
+  color: #ffffff;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+}
+
+.itemInfo-btn>button:nth-child(2) {
+  background-color: #FF0000;
+  color: #ffffff;
+}
+
+.itemInfo-btn>button:hover {
+  background-color: #ffffff;
+  color: #55A603;
+}
+
+.itemInfo-btn>button:hover:nth-child(2) {
+  background-color: #ffffff;
+  color: #FF0000;
 }
 
 .notFound {

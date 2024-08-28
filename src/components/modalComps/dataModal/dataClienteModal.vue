@@ -18,19 +18,19 @@ const closeModal = () => {
     <div class="background" v-if="props.isVisible">
         <div class="modal">
             <div class="modalHeader">
-                <h2>Detalhes do Cliente</h2>
-            <button class="close-button" @click="closeModal">x</button>
-        </div>
-        <div>
-            <slot class="teste"></slot>
-        </div>
+                <h2>Detalhes do serviço</h2>
+                <button class="close-button" @click="closeModal">x</button>
+            </div>
+            <div>
+                <slot class="teste"></slot>
+            </div>
         </div>
     </div>
 </template>
 
 
 <style scoped>
-.background{
+.background {
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0;
@@ -39,6 +39,7 @@ const closeModal = () => {
     height: 100%;
     z-index: 9;
 }
+
 .modal {
     background-color: #E9F5F9;
     padding: 1rem;
@@ -52,10 +53,12 @@ const closeModal = () => {
     margin: auto;
     z-index: 10;
     width: 40%;
+    height: 45%;
     gap: 20px;
     border-radius: 1rem;
 }
-.modalHeader{
+
+.modalHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,6 +66,7 @@ const closeModal = () => {
     padding: 1rem;
     color: black;
 }
+
 .close-button {
     background: none;
     border: none;
@@ -70,5 +74,4 @@ const closeModal = () => {
     cursor: pointer;
     color: rgb(0, 0, 0);
 }
-
 </style>
