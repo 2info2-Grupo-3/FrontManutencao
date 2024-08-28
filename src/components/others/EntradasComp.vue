@@ -1,33 +1,32 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { useEntradasStore } from '@/stores/';
-import dataClienteModal from '../modalComps/dataModal/dataClienteModal.vue'; // Modal para detalhes da entrada
-import addEntradaModal from '../modalComps/addModal/addEntradaModal.vue'; // Modal para adicionar nova entrada
+import { computed, onMounted, ref } from 'vue'
+import { useEntradasStore } from '@/stores/'
+import dataEntradaModal from '../modalComps/dataModal/dataEntradaModal.vue'
+import addEntradaModal from '../modalComps/addModal/addEntradaModal.vue' // Modal para adicionar nova entrada
 
-const entradasStore = useEntradasStore();
-const inputSearch = ref('');
+const entradasStore = useEntradasStore()
+const inputSearch = ref('')
 
 onMounted(() => {
-  entradasStore.getEntradas();
-});
+  entradasStore.getEntradas()
+})
 
-const entradas = computed(() => entradasStore.state.entradas);
+const entradas = computed(() => entradasStore.state.entradas)
 
 function filteredList() {
   return entradas.value.filter((itemf) =>
     itemf.peca.toLowerCase().includes(inputSearch.value.toLowerCase())
-  );
+  )
 }
 
-const isModalVisible = ref(false);
-const selectedEntrada = ref(null);
-const openModalAdd = ref(false);
+const isModalVisible = ref(false)
+const selectedEntrada = ref(null)
+const openModalAdd = ref(false)
 
 const openModal = (data) => {
-  selectedEntrada.value = data;
-  isModalVisible.value = true;
-};
-
+  selectedEntrada.value = data
+  isModalVisible.value = true
+}
 </script>
 
 <template>
@@ -38,11 +37,11 @@ const openModal = (data) => {
     <div class="search-bar">
       <div class="inputSearch">
         <input type="text" v-model="inputSearch" placeholder="Pesquisar entrada" />
-        <img src="../../../public/searchicon.svg" alt="">
+        <img src="../../../public/searchicon.svg" alt="" />
       </div>
       <button class="btn-adicionar" @click="openModalAdd = true">Adicionar entrada +</button>
     </div>
-    <div v-if="openModalAdd" style="width: 90%;">
+    <div v-if="openModalAdd" style="width: 90%">
       <addEntradaModal />
     </div>
     <div class="container">
@@ -59,16 +58,20 @@ const openModal = (data) => {
       <div v-for="item in filteredList()" :key="item.id" class="bodytable" @click="openModal(item)">
         <div>
           <p>{{ item.id }}</p>
-        </div><span></span>
+        </div>
+        <span></span>
         <div>
           <p>{{ item.peca }}</p>
-        </div><span></span>
+        </div>
+        <span></span>
         <div>
           <p>{{ item.data }}</p>
-        </div><span></span>
+        </div>
+        <span></span>
         <div>
           <p>{{ item.quantidade }}</p>
-        </div><span></span>
+        </div>
+        <span></span>
       </div>
 
       <div v-if="filteredList().length <= 0" class="notFound">
@@ -76,8 +79,7 @@ const openModal = (data) => {
       </div>
     </div>
 
-    <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
-      <h3>Detalhes da Entrada</h3>
+    <dataEntradaModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
       <div class="modalInfo">
         <p>ID: {{ selectedEntrada?.id }}</p>
         <p>Peça: <input type="text" v-model="selectedEntrada.peca" /></p>
@@ -88,7 +90,7 @@ const openModal = (data) => {
         <button @click="entradasStore.updateEntrada(selectedEntrada)">Atualizar</button>
         <button @click="entradasStore.deleteEntrada(selectedEntrada.id)">Excluir</button>
       </div>
-    </dataClienteModal>
+    </dataEntradaModal>
   </article>
 </template>
 
@@ -97,7 +99,7 @@ article {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   height: 100%;
   background-image: url('public/fundo-pecas.png');
   background-size: cover;
@@ -154,12 +156,8 @@ article {
   margin-left: 1em;
 }
 
-.inputSearch input:focus {
-  outline: none;
-}
-
 .btn-adicionar {
-  background-color: #5DB405;
+  background-color: #5db405;
   border: none;
   width: 20%;
   padding: 0.6rem;
@@ -180,12 +178,13 @@ article {
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
   height: 2rem;
-  background-color: #E3E3E3;
+  background-color: #e3e3e3;
   color: rgb(124, 124, 124);
   padding: 0.5rem;
   border-radius: 5px;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
   align-items: center;
+  margin-bottom: 2em;
 }
 
 .headertable h2 {
@@ -202,13 +201,17 @@ article {
   margin: 0em 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
-  width: 95%;
+  width: 100%;
   color: black;
   padding: 0.5rem;
   border-bottom: 2px solid #ffffff;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   background-color: #ffffff;
+}
+
+.bodytable:-webkit-scrollbar {
+  display: none;
 }
 
 .bodytable div {
@@ -219,11 +222,6 @@ article {
 }
 
 .bodytable p {
-  font-size: 14px;
-  text-align: center;
-}
-
-.bodytable p {
   font-size: 16px;
   text-align: center;
 }
@@ -231,9 +229,8 @@ article {
 .bodytable span {
   height: 100%;
   width: 1px;
-  background-color: #33333300;
+  background-color: #ffffff;
 }
-
 
 .notFound {
   display: flex;
@@ -246,36 +243,60 @@ article {
 
 .buttonsInfo {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  position: absolute;
-  padding: 1rem 0rem;
+  justify-content: space-evenly;
 }
 
-.buttonsInfo button {
-  padding: 10px;
-  background-color: #fff;
-  color: #333;
-  border-radius: .5rem;
+.buttonsInfo>button {
+  margin-top: .5rem;
+  width: 45%;
+  padding: .5rem;
+  background-color: #55A603;
+  color: #ffffff;
+  border: none;
+  border-radius: 1rem;
   cursor: pointer;
-  width: 100px;
-  margin: 0 10px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: .3s;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonsInfo>button:nth-child(2) {  
+  background-color: #FF0000; 
+  color: #ffffff;
+}
+
+.buttonsInfo>button:hover {
+  background-color: #ffffff;
+  color: #55A603;
+}
+
+.buttonsInfo>button:hover:nth-child(2) {
+  background-color: #ffffff;
+  color: #FF0000;
+}
+
+.modalInfo p input {
+  width: 100%;
+  padding: .5rem;
+  border-radius: 0.4rem;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  border: 2px #333 solid;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: black;
 }
 
-.modalInfo>p {
+.modalInfo > p {
   display: flex;
-  justify-content: space-between;
-  width: 60%;
+  width: 50%;
+  justify-content: center;
   align-items: center;
   gap: 5px;
   margin: 5px 0px;

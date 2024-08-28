@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import { useSaidasStore } from '@/stores/'
-import dataClienteModal from '../modalComps/dataModal/dataClienteModal.vue' // Modal para detalhes da saída
+import dataSaidaModal from '../modalComps/dataModal/dataSaidaModal.vue'
 import addSaidaModal from '../modalComps/addModal/addSaidaModal.vue' // Modal para adicionar nova saída
 
 const saidasStore = useSaidasStore()
@@ -81,8 +81,7 @@ const toggleAddModal = () => {
       </div>
     </div>
 
-    <dataClienteModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
-      <h3>Detalhes da Saida</h3>
+    <dataSaidaModal :isVisible="isModalVisible" @close="isModalVisible = !isModalVisible">
       <div class="modalInfo">
         <p>ID: {{ selectedSaida.id }}</p>
         <p>Peça: <input type="text" v-model="selectedSaida.peca" /></p>
@@ -93,7 +92,7 @@ const toggleAddModal = () => {
         <button @click="saidasStore.updateSaida(selectedSaida)">Atualizar</button>
         <button @click="saidasStore.deleteSaida(selectedSaida.id)">Excluir</button>
       </div>
-    </dataClienteModal>
+    </dataSaidaModal>
   </article>
 </template>
 
@@ -131,7 +130,26 @@ article {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-evenly;.buttonsInfo {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  position: absolute;
+  padding: 1rem 0rem;
+}
+
+.buttonsInfo button {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+  border-radius: .5rem;
+  cursor: pointer;
+  width: 100px;
+  margin: 0 10px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: .3s;
+}
 }
 
 .inputSearch {
@@ -191,6 +209,7 @@ article {
   border-radius: 5px;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
   align-items: center;
+  margin-bottom: 2em;
 }
 
 .headertable h2 {
@@ -207,13 +226,17 @@ article {
   margin: 0em 1em 1em 1em;
   display: grid;
   grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
-  width: 95%;
+  width: 100%;
   color: black;
   padding: 0.5rem;
   border-bottom: 2px solid #ffffff;
   box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   background-color: #ffffff;
+}
+
+.bodytable:-webkit-scrollbar {
+  display: none;
 }
 
 .bodytable div {
@@ -224,11 +247,6 @@ article {
 }
 
 .bodytable p {
-  font-size: 14px;
-  text-align: center;
-}
-
-.bodytable p {
   font-size: 16px;
   text-align: center;
 }
@@ -236,8 +254,9 @@ article {
 .bodytable span {
   height: 100%;
   width: 1px;
-  background-color: #33333300;
+  background-color: #ffffff;
 }
+
 
 .notFound {
   display: flex;
@@ -250,36 +269,60 @@ article {
 
 .buttonsInfo {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  position: absolute;
-  padding: 1rem 0rem;
+  justify-content: space-evenly;
 }
 
-.buttonsInfo button {
-  padding: 10px;
-  background-color: #fff;
-  color: #333;
-  border-radius: .5rem;
+.buttonsInfo>button {
+  margin-top: .5rem;
+  width: 45%;
+  padding: .5rem;
+  background-color: #55A603;
+  color: #ffffff;
+  border: none;
+  border-radius: 1rem;
   cursor: pointer;
-  width: 100px;
-  margin: 0 10px;
-  font-size: 16px;
-  font-weight: bold;
-  transition: .3s;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonsInfo>button:nth-child(2) {  
+  background-color: #FF0000; 
+  color: #ffffff;
+}
+
+.buttonsInfo>button:hover {
+  background-color: #ffffff;
+  color: #55A603;
+}
+
+.buttonsInfo>button:hover:nth-child(2) {
+  background-color: #ffffff;
+  color: #FF0000;
+}
+
+.modalInfo p input {
+  width: 100%;
+  padding: .5rem;
+  border-radius: 0.4rem;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  border: none;
 }
 
 .modalInfo {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  border: 2px #333 solid;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: black;
 }
 
-.modalInfo>p {
+.modalInfo > p {
   display: flex;
-  justify-content: space-between;
-  width: 60%;
+  width: 50%;
+  justify-content: center;
   align-items: center;
   gap: 5px;
   margin: 5px 0px;

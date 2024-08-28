@@ -12,14 +12,14 @@ const emit = defineEmits(['close']);
 const closeModal = () => {
     emit('close');
 };
-
 </script>
+
 <template>
-<div class="background" v-if="props.isVisible">
+    <div class="background" v-if="props.isVisible">
         <div class="modal">
             <div class="modalHeader">
-                <h2>Detalhes da peca</h2>
-            <button class="close-button" @click="closeModal">X</button>
+                <h2>Detalhes de Saida</h2>
+            <button class="close-button" @click="closeModal">x</button>
         </div>
         <div>
             <slot class="teste"></slot>
@@ -27,6 +27,8 @@ const closeModal = () => {
         </div>
     </div>
 </template>
+
+
 <style scoped>
 .background{
     background-color: rgba(0, 0, 0, 0.5);
@@ -51,6 +53,7 @@ const closeModal = () => {
     z-index: 10;
     width: 40%;
     gap: 20px;
+    height: 24em;
     border-radius: 1rem;
 }
 .modalHeader{
@@ -68,4 +71,5 @@ const closeModal = () => {
     cursor: pointer;
     color: rgb(0, 0, 0);
 }
+
 </style>
