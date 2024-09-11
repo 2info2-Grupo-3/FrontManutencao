@@ -324,7 +324,7 @@ article {
   justify-content: space-between;
   align-items: center;
   justify-content: center;
-  margin: 1em;
+  margin: .5em;
   color: black;
 }
 

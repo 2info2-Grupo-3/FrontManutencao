@@ -52,7 +52,7 @@ const formatarServico = (servico) => {
       <button class="btn-adicionar" @click="openModalAdd = true">Adicionar serviço</button>
     </div>
     <div v-if="openModalAdd" style="width: 90%;">
-      <addServicoModal />
+      <addServicoModal @close="openModalAdd = false"/>
     </div>
     <div class="container">
       <div class="headertable">

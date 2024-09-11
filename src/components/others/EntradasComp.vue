@@ -42,7 +42,7 @@ const openModal = (data) => {
       <button class="btn-adicionar" @click="openModalAdd = true">Adicionar entrada +</button>
     </div>
     <div v-if="openModalAdd" style="width: 90%">
-      <addEntradaModal />
+      <addEntradaModal @close="openModalAdd = false" />
     </div>
     <div class="container">
       <div class="headertable">
