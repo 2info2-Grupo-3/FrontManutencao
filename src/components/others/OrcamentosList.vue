@@ -4,6 +4,7 @@ import { useOrcamentosStore, useClientesStore, usePecasStore, useServicosStore }
 import dataOrcamentosModal from '../modalComps/dataModal/dataOrcamentosModal.vue'
 import addModalOrcamentos from '@/components/modalComps/addModal/addModalOrcamentos.vue'
 import FaturamentoComp from './FaturamentoComp.vue'
+import axios from 'axios'
 const orcamentosStore = useOrcamentosStore()
 const pecasStore = usePecasStore()
 const servicosStore = useServicosStore()
@@ -77,6 +78,26 @@ const addServico = () => {
   servicoAdd.value = null
   quantidadeServicoAdd.value = 1
 }
+
+async function getRelatorios(orcamento) {
+  try {
+    const response = await axios({
+      url: `http://localhost:8000/relatorios/orcamentos/${orcamento.id}`,
+      method: 'GET',
+      responseType: 'blob' // Importante para receber o PDF como um blob
+    })
+
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', `relatorio_orcamento_${orcamento.id}.pdf`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } catch (error) {
+    console.error("Erro ao baixar o PDF:", error)
+  }
+}
 </script>
 <template>
   <article>
@@ -127,6 +148,8 @@ const addServico = () => {
           <span></span>
           <div>
             <button @click="openModal(orcamento)">Detalhes</button>
+            <span></span>
+            <button @click="getRelatorios(orcamento)">Relatorios</button>
           </div>
         </div>
       </div>
