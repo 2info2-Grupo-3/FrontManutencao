@@ -27,10 +27,6 @@ const openModal = (data) => {
   selectedSaida.value = data
   isModalVisible.value = true
 }
-
-const toggleAddModal = () => {
-  openModalAdd.value = !openModalAdd.value
-}
 </script>
 
 <template>
@@ -45,8 +41,8 @@ const toggleAddModal = () => {
       </div>
       <button class="btn-adicionar" @click="openModalAdd = true">Adicionar saida +</button>
     </div>
-    <div v-if="openModalAdd" @close="toggleAddModal">
-      <addSaidaModal />
+    <div v-if="openModalAdd">
+      <addSaidaModal @close="openModalAdd = false"/>
     </div>
     <div class="container">
       <div class="headertable">
@@ -130,12 +126,7 @@ article {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;.buttonsInfo {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  position: absolute;
-  padding: 1rem 0rem;
+  justify-content: space-evenly;
 }
 
 .buttonsInfo button {
@@ -150,7 +141,7 @@ article {
   font-weight: bold;
   transition: .3s;
 }
-}
+
 
 .inputSearch {
   background-color: #E3E3E3;
