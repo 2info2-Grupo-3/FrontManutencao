@@ -79,7 +79,7 @@ const addServico = () => {
   quantidadeServicoAdd.value = 1
 }
 
-async function getRelatorios(orcamento) {
+async function getRelatorio(orcamento) {
   try {
     const response = await axios({
       url: `http://localhost:8000/relatorios/orcamentos/${orcamento.id}`,
@@ -98,6 +98,26 @@ async function getRelatorios(orcamento) {
     console.error("Erro ao baixar o PDF:", error)
   }
 }
+
+async function getRelatorios() {
+  try {
+    const response = await axios({
+      url: `http://localhost:8000/relatorios/orcamentos/`,
+      method: 'GET',
+      responseType: 'blob'
+    })
+    9
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', `relatorio_orcamentos.pdf`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } catch (error) {
+    console.error("Erro ao baixar o PDF:", error)
+  }
+}
 </script>
 <template>
   <article>
@@ -109,9 +129,15 @@ async function getRelatorios(orcamento) {
         <input type="text" v-model="inputSearch" placeholder="Pesquisar orçamento" />
         <img src="../../../public/searchicon.svg" alt="" />
       </div>
-      <button class="btn-adicionar" @click="addModalVisible = !addModalVisible">
-        Adicionar orçamento +
-      </button>
+      <div class="buttonsOrcamento">
+        <button class="btn-adicionar" @click="addModalVisible = !addModalVisible">
+          Adicionar orçamento +
+        </button>
+
+        <button class="btn-adicionar" @click="getRelatorios">
+          Gerar Relatorios
+        </button>
+      </div>
     </div>
     <div v-if="addModalVisible">
       <addModalOrcamentos @close="addModalVisible = false" />
@@ -127,6 +153,8 @@ async function getRelatorios(orcamento) {
         <h2>Data</h2>
         <span></span>
         <h2>Detalhes</h2>
+        <span></span>
+        <h2>Relatorios</h2>
       </div>
       <div class="tableScroll">
         <div v-for="orcamento in filteredList()" :key="orcamento.id" class="bodytable">
@@ -148,8 +176,10 @@ async function getRelatorios(orcamento) {
           <span></span>
           <div>
             <button @click="openModal(orcamento)">Detalhes</button>
-            <span></span>
-            <button @click="getRelatorios(orcamento)">Relatorios</button>
+          </div>
+          <span></span>
+          <div>
+            <button @click="getRelatorio(orcamento)">Relatorios</button>
           </div>
         </div>
       </div>
@@ -178,15 +208,12 @@ async function getRelatorios(orcamento) {
             <div class="pecaInfo" v-for="peca in selectedOrcamento.pecas_orcamento" :key="peca.id">
               <p>{{ peca.nome }}</p>
               <input type="number" v-model="peca.quantidade" />
-              <button
-                class="btn-del"
-                @click="
-                  selectedOrcamento.pecas_orcamento.splice(
-                    getPosition(peca, selectedOrcamento.pecas_orcamento),
-                    1
-                  )
-                "
-              >
+              <button class="btn-del" @click="
+                selectedOrcamento.pecas_orcamento.splice(
+                  getPosition(peca, selectedOrcamento.pecas_orcamento),
+                  1
+                )
+                ">
                 del
               </button>
             </div>
@@ -202,21 +229,14 @@ async function getRelatorios(orcamento) {
           </div>
           <div class="itemInfo">
             <label for="">Serviços:</label>
-            <div
-              class="servicoInfo"
-              v-for="servico in selectedOrcamento.servicos_orcamento"
-              :key="servico.id"
-            >
+            <div class="servicoInfo" v-for="servico in selectedOrcamento.servicos_orcamento" :key="servico.id">
               <p>{{ servico.nome }}</p>
-              <button
-                class="btn-del-pa"
-                @click="
-                  selectedOrcamento.servicos_orcamento.splice(
-                    getPosition(servico, selectedOrcamento.servicos_orcamento),
-                    1
-                  )
-                "
-              >
+              <button class="btn-del-pa" @click="
+                selectedOrcamento.servicos_orcamento.splice(
+                  getPosition(servico, selectedOrcamento.servicos_orcamento),
+                  1
+                )
+                ">
                 del
               </button>
             </div>
@@ -267,10 +287,11 @@ article {
 }
 
 .search-bar {
-  width: 100%;
+  margin: auto;
+  width: 95%;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .btn-adicionar {
@@ -328,11 +349,11 @@ article {
   color: black;
 }
 
-.itemInfo > label {
+.itemInfo>label {
   width: 20%;
 }
 
-.itemInfo > input,
+.itemInfo>input,
 select,
 div input {
   width: 60%;
@@ -347,7 +368,7 @@ div input {
   justify-content: space-evenly;
 }
 
-.itemInfo-btn > button {
+.itemInfo-btn>button {
   margin-top: 0.5rem;
   width: 45%;
   padding: 0.5rem;
@@ -361,22 +382,22 @@ div input {
   justify-content: center;
 }
 
-.itemInfo-btn > button:nth-child(2) {
+.itemInfo-btn>button:nth-child(2) {
   background-color: #ff0000;
   color: #ffffff;
 }
 
-.itemInfo-btn > button:hover {
+.itemInfo-btn>button:hover {
   background-color: #ffffff;
   color: #55a603;
 }
 
-.itemInfo-btn > button:hover:nth-child(2) {
+.itemInfo-btn>button:hover:nth-child(2) {
   background-color: #ffffff;
   color: #ff0000;
 }
 
-.modalInfo > p {
+.modalInfo>p {
   display: flex;
   justify-content: space-between;
   width: 60%;
@@ -399,7 +420,7 @@ div input {
 .headertable {
   position: sticky;
   display: grid;
-  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 100%;
   height: 2rem;
   background-color: #e3e3e3;
@@ -430,14 +451,14 @@ div input {
   flex-direction: column;
 }
 
-.container > .tableScroll::-webkit-scrollbar {
+.container>.tableScroll::-webkit-scrollbar {
   display: none;
 }
 
 .bodytable {
   margin: 0em 1em 1em 1em;
   display: grid;
-  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr 1px;
   width: 95%;
   color: black;
   padding: 0.5rem;
@@ -490,11 +511,12 @@ div input {
   padding: 0.5rem;
 }
 
-.inputSearch > img {
+.inputSearch>img {
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 1em;
 }
+
 .inputSearch input {
   background-color: #e3e3e3;
   width: 100%;
@@ -502,9 +524,11 @@ div input {
   font-size: 1em;
   margin-left: 1em;
 }
+
 .inputSearch input:focus {
   outline: none;
 }
+
 .btn-add {
   padding: 0.5rem;
   border-radius: 1rem;
@@ -554,5 +578,18 @@ div input {
   font-size: 20px;
   border-radius: 5px;
   padding: 1rem;
+}
+
+.buttonsOrcamento {
+  display: flex;
+  width: 50%;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.buttonsOrcamento>button {
+  width: 100%;
 }
 </style>

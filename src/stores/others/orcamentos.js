@@ -33,6 +33,7 @@ export const useOrcamentosStore = defineStore("orcamentos",
                 state.error = error;
             } finally {
                 state.loading = false;
+                // window.location.reload();
             }
         };
 
