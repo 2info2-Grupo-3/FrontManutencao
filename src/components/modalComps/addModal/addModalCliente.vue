@@ -116,6 +116,8 @@ form {
   display: flex;
   flex-direction: column;
   gap: .5rem;
+  overflow: scroll;
+  max-height: 40vh
 }
 
 form>div {
@@ -166,5 +168,10 @@ form>button:hover {
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
+}
+
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
 }
 </style>

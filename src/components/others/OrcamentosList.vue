@@ -310,6 +310,10 @@ article {
   transition: 0.5s;
 }
 
+.btn-adicionar:nth-child(1){
+  margin-left: 2rem;
+}
+
 .buttonsInfo {
   display: flex;
   justify-content: center;

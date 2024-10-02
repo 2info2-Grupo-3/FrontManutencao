@@ -53,6 +53,8 @@ onMounted(async () => {
 
   .container-home-view{
     position: absolute;
+    top: 0;
+    left: 0;
     background-image: url('/public/cliente-view.png');
     background-size: cover;
     width: 100%;
@@ -67,8 +69,8 @@ onMounted(async () => {
 }
 
 .icon{
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
 }
 
 .container-links{
